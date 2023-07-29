@@ -1,0 +1,2 @@
+obj\Debug\net6.0\Protos/Szakdolgozatgreet.cs \
+obj\Debug\net6.0\Protos/SzakdolgozatgreetGrpc.cs: Protos/szakdolgozatgreet.proto
