@@ -5,26 +5,6 @@ namespace SzakdolgozatGRPCSzerver
 {
     public class Program
     {
-        public static void createDatabaseAndTableIfNotExist()
-        {
-            try
-            {
-                MySqlConnection connection = new MySqlConnection("SERVER=localhost;UID=root;password= ;");
-                connection.Open();
-                MySqlCommand cmd = new MySqlCommand("CREATE DATABASE IF NOT EXISTS Szakdolgozat_Database;", connection);
-                cmd.ExecuteNonQuery();
-                connection.Close();
-                connection = new MySqlConnection("SERVER=localhost;UID=root;password= ;DATABASE= Szakdolgozat_Database;");
-                connection.Open();
-                cmd = new MySqlCommand("CREATE TABLE IF NOT EXISTS users (id INT(255),attendance BOOL, hasDined BOOL);",connection);
-                cmd.ExecuteNonQuery();
-                connection.Close();
-            }
-            catch(Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-        }
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
@@ -40,8 +20,9 @@ namespace SzakdolgozatGRPCSzerver
             // Configure the HTTP request pipeline.
             app.MapGrpcService<SzakdolgozatService>();
             app.MapGet("/", () => "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
-
-            createDatabaseAndTableIfNotExist();
+            MySQLConnectonHandlerWithoutDatabase mySQLConnectionHandler = new MySQLConnectonHandlerWithoutDatabase();
+            mySQLConnectionHandler.createDatabaseIfNotExist();
+            mySQLConnectionHandler.createTableIfNotExists();
 
             app.Run();
         }
