@@ -1,0 +1,27 @@
+{
+  "version": 2,
+  "dgSpecHash": "r/PbZ3wXPugFSvnzAdrxL8n9PlQUPvxugWdXvu96dMg5FHeVjmqASZbYm655YRIE6Ct8HhcctJnEfdos7qNEaQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\utass\\Desktop\\Szakdoga\\SzakdolgozatGRPCKliens\\SzakdolgozatGRPCKliens\\SzakdolgozatGRPCKliens.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\utass\\.nuget\\packages\\google.protobuf\\3.24.4\\google.protobuf.3.24.4.nupkg.sha512",
+    "C:\\Users\\utass\\.nuget\\packages\\grpc.core.api\\2.57.0\\grpc.core.api.2.57.0.nupkg.sha512",
+    "C:\\Users\\utass\\.nuget\\packages\\grpc.net.client\\2.57.0\\grpc.net.client.2.57.0.nupkg.sha512",
+    "C:\\Users\\utass\\.nuget\\packages\\grpc.net.common\\2.57.0\\grpc.net.common.2.57.0.nupkg.sha512",
+    "C:\\Users\\utass\\.nuget\\packages\\grpc.tools\\2.58.0\\grpc.tools.2.58.0.nupkg.sha512",
+    "C:\\Users\\utass\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\6.0.0\\microsoft.extensions.logging.abstractions.6.0.0.nupkg.sha512",
+    "C:\\Users\\utass\\.nuget\\packages\\mifare\\1.1.3\\mifare.1.1.3.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'MiFare 1.1.3' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net6.0-windows7.0'. This package may not be fully compatible with your project.",
+      "libraryId": "MiFare",
+      "targetGraphs": [
+        "net6.0-windows7.0"
+      ]
+    }
+  ]
+}

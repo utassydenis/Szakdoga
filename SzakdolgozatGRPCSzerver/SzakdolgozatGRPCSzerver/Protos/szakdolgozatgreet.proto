@@ -2,30 +2,31 @@ syntax = "proto3";
 
 option csharp_namespace = "SzakdolgozatGRPCSzerver";
 
-package greet;
+package Szakdolgozat;
 
 service SzakdolgozatGreeter {
-	rpc List(Empty) returns (User);
-	rpc AddUser(User) returns (Result);
-	rpc RemoveUser(User) returns (Result);
+	rpc Enter(DoorEvent) returns (Result);
+	rpc Exit(DoorEvent) returns (Result);
 
+	rpc ListDoors(Empty) returns (stream DoorInformation);
 
-	rpc EnterBuilding(User) returns (Result);
-	rpc ExitBuilding(User) returns (Result);
-	rpc EnterDiningHall(User) returns (Result);
+	rpc EnterEntrance(DoorEvent) returns (Result);
+	rpc ExitEntrance(DoorEvent) returns (Result);
 }
 
-// The request message containing the user's name.
 message Empty{
-
-}
-message User{
-	int32 userID = 1;
-	bool isInside = 2;
-	bool canDine = 3;
 	
 }
 message Result{
 	string message = 1;
+}
+message DoorEvent{
+	string card_ID = 1;
+	int32 door_ID = 2;
+	string door_name = 3;
+}
 
+message DoorInformation{
+	int32 door_ID = 1;
+	string door_name = 2;
 }

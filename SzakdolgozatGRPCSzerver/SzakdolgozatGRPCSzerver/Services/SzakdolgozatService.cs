@@ -5,12 +5,124 @@ using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using MySqlX.XDevAPI.Relational;
 using Microsoft.AspNetCore.Connections;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SzakdolgozatGRPCSzerver.Services
 {
-    public abstract class AbstractMySQLConnectionHandler
+
+    public class SzakdolgozatService : SzakdolgozatGreeter.SzakdolgozatGreeterBase
     {
-        protected MySqlConnection connection;
+        MySqlConnection connection = new MySqlConnection("SERVER=localhost;DATABASE=SzakdolgozatDatabase;UID=root;PASSWORD= ;");
+
+        public override Task<Result> Enter(DoorEvent doorEvent, ServerCallContext context)
+        {
+            if (!OpenConnection())
+            {
+                return Task.FromResult(new Result { Message = "Failed to connect to database." });
+            }
+            if (!CheckCardValidity(doorEvent.CardID))
+            {
+                CloseConnection();
+                return Task.FromResult(new Result { Message = "Invalid card!" });
+            }
+            if (!CheckIfUserCanEnter(doorEvent))
+            {
+                CloseConnection();
+                return Task.FromResult(new Result { Message = "This user doesn't have access to this door!" });
+            }
+
+            MySqlCommand cmd = new MySqlCommand("INSERT INTO door_logs(door_id,card_id,time_entered) "
+                + "VALUES('" + doorEvent.DoorID + "','"
+                + doorEvent.CardID + "','"
+                + eventTimeLog() + "');"
+                , connection);
+            cmd.ExecuteNonQuery();
+            CloseConnection();
+            return Task.FromResult(new Result { Message = "OK!" });
+        }
+
+        public override Task<Result> Exit(DoorEvent doorEvent, ServerCallContext context)
+        {
+            if (!OpenConnection())
+            {
+                return Task.FromResult(new Result { Message = "Failed to connect to database." });
+            }
+            if (!CheckCardValidity(doorEvent.CardID))
+            {
+                CloseConnection();
+                return Task.FromResult(new Result { Message = "Invalid card!" });
+            }
+            if (!CheckIfUserCanEnter(doorEvent))
+            {
+                CloseConnection();
+                return Task.FromResult(new Result { Message = "This user doesn't have access to this door!" });
+            }
+
+            MySqlCommand cmd = new MySqlCommand("UPDATE door_logs SET time_exited = '" + eventTimeLog() 
+                + "' WHERE door_id = '" + doorEvent.DoorID 
+                + "' AND card_id = '" + doorEvent.CardID 
+                + "' AND time_exited IS NULL AND time_entered = (SELECT MAX(time_entered) FROM door_logs);" 
+                , connection);
+            cmd.ExecuteNonQuery();
+            CloseConnection();
+            return Task.FromResult(new Result { Message = "OK!" });
+        }
+
+        List<DoorInformation> doorInformationList = new List<DoorInformation>();
+        public override async Task ListDoors(Empty e, IServerStreamWriter<DoorInformation> responseStream, ServerCallContext context)
+        {
+            if (OpenConnection())
+            {
+                MySqlCommand cmd = new MySqlCommand("SELECT * FROM doors", connection);
+                MySqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    DoorInformation doorInformation = new DoorInformation();
+
+                    doorInformation.DoorID = int.Parse(reader.GetString("door_id"));
+                    doorInformation.DoorName = reader.GetString("door_name");
+                    doorInformationList.Add(doorInformation);
+                }
+            }
+
+            foreach(var information in doorInformationList)
+            {
+                await responseStream.WriteAsync(information);
+            }
+        }
+        public bool CheckCardValidity(string card_id)
+        {
+            string logTime = eventTimeLog();
+            MySqlCommand cmd = new MySqlCommand("SELECT COUNT(*) FROM card_user WHERE card_id='" + card_id 
+                + "' AND start_date <= '"+ logTime 
+                + "' AND (expired IS NULL OR expired > '"+logTime+"');"
+                ,connection);
+            int result = int.Parse(cmd.ExecuteScalar() + "");
+            if(result == 1)
+            {
+                return true;
+            }
+            return false;
+        }
+        public string eventTimeLog()
+        {
+            return DateTime.Now.ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
+        }
+        public bool CheckIfUserCanEnter(DoorEvent e)
+        {
+            MySqlCommand cmd = new MySqlCommand("SELECT COUNT(*) FROM door_privilige_requirement " +
+                "INNER JOIN user_priviliges ON door_privilige_requirement.privilige_level = user_priviliges.privilige_level " +
+                "INNER JOIN card_user ON card_user.user_id = user_priviliges.user_id " +
+                "WHERE door_privilige_requirement.door_id = '"+ e.DoorID + "'" +
+                "AND card_user.card_id = '" + e.CardID +"';", connection);
+            
+            int result = int.Parse(cmd.ExecuteScalar() + "");
+            if(result == 1)
+            {
+                return true;
+            }
+            return false;
+        }
         public bool OpenConnection()
         {
             try
@@ -18,11 +130,11 @@ namespace SzakdolgozatGRPCSzerver.Services
                 connection.Open();
                 return true;
             }
-            catch (MySqlException e)
+            catch (Exception ex)
             {
-                Console.WriteLine(e.Number + " " + e.Message);
-                return false;
+                Console.WriteLine("Error: " + ex.Message);
             }
+            return false;
         }
         public bool CloseConnection()
         {
@@ -31,154 +143,11 @@ namespace SzakdolgozatGRPCSzerver.Services
                 connection.Close();
                 return true;
             }
-            catch (MySqlException e)
+            catch (Exception ex)
             {
-                Console.WriteLine(e.Message);
-                return false;
+                Console.WriteLine("Error: " + ex.Message);
             }
-        }
-    }
-    public class MySQLConnectonHandlerWithoutDatabase : AbstractMySQLConnectionHandler
-    {
-        public MySQLConnectonHandlerWithoutDatabase()
-        {
-            connection = new MySqlConnection("SERVER=localhost;UID=root;password= ;");
-        }
-        public void createDatabaseIfNotExist()
-        {
-            try
-            {
-                if (OpenConnection())
-                {
-                    MySqlCommand cmd = new MySqlCommand("CREATE DATABASE IF NOT EXISTS Szakdolgozat_Database;", connection);
-                    cmd.ExecuteNonQuery();
-                    CloseConnection();
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-        }
-        public void createTableIfNotExists()
-        {
-            connection = new MySqlConnection("SERVER=localhost;UID=root;password= ;DATABASE= Szakdolgozat_Database;");
-            try
-            {
-                if (OpenConnection())
-                {
-                    MySqlCommand cmd = new MySqlCommand("CREATE TABLE IF NOT EXISTS users (id INT(255),attendance BOOL, hasDined BOOL);", connection);
-                    cmd.ExecuteNonQuery();
-                    CloseConnection();
-                }
-            }
-            catch(Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-        }
-    }
-    public class MySQLConnectionHandlerWithDatabase : AbstractMySQLConnectionHandler
-    {
-
-        public MySQLConnectionHandlerWithDatabase()
-        {
-            connection = new MySqlConnection("SERVER=localhost;UID=root;password= ;DATABASE=szakdolgozat_database");
-        }
-        public void ExecuteMySQLQuery(string query)
-        {
-            MySqlCommand cmd = new MySqlCommand(query, connection);
-            cmd.ExecuteNonQuery();
-            CloseConnection();
-        }
-        public List<User> QueryToListAllUsersFromDatabase()
-        {
-
-            List<User> tmpUserList = new List<User>();
-            if (OpenConnection())
-            {
-                MySqlCommand command = new MySqlCommand("SELECT * FROM users", connection);
-                MySqlDataReader reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    User tmpUser = new User();
-                    tmpUser.UserID = reader.GetInt32("id");
-                    tmpUser.IsInside = reader.GetBoolean("attendance");
-                    tmpUser.CanDine = reader.GetBoolean("hasDined");
-                    tmpUserList.Add(tmpUser);
-                }
-            }
-            return tmpUserList;
-        }
-    }
-
-    public class SzakdolgozatService : SzakdolgozatGreeter.SzakdolgozatGreeterBase
-    {
-        /*
-        private readonly ILogger<SzakdolgozatService> _logger;
-        public SzakdolgozatService(ILogger<SzakdolgozatService> logger)
-        {
-            _logger = logger;
-        }
-        */
-
-        MySQLConnectionHandlerWithDatabase connectionHandler = new MySQLConnectionHandlerWithDatabase();
-        List<User> users = new List<User>();
-        public async Task List(Empty e, Grpc.Core.IServerStreamWriter<User> responseStream, Grpc.Core.ServerCallContext context)
-        {
-            users = connectionHandler.QueryToListAllUsersFromDatabase();
-            foreach (var u in users)
-            {
-                await responseStream.WriteAsync(u);
-            }
-        }
-        //TO-DO
-        /*public override Task<Result> AddUser(User user, ServerCallContext context)
-        {
-            //TO-DO
-        }
-        public override Task<Result> DeleteUser(User user, ServerCallContext context)
-        {
-            //TO-DO
-        }*/
-        public override Task<Result> EnterBuilding(User userRequest, ServerCallContext context)
-        {
-            if (connectionHandler.OpenConnection())
-            {
-                connectionHandler.ExecuteMySQLQuery("UPDATE users SET attendance='1' WHERE id='" + userRequest.UserID + "';");
-                return Task.FromResult(new Result { Message = "OK!" });
-            }
-            else
-            {
-                connectionHandler.CloseConnection();
-                return Task.FromResult(new Result { Message = "Database couldn't be reached." });
-            }
-        }
-        public override Task<Result> EnterDiningHall(User userRequest, ServerCallContext context)
-        {
-            if (connectionHandler.OpenConnection())
-            {
-                connectionHandler.ExecuteMySQLQuery("UPDATE users SET hasDined='1' WHERE id='" + userRequest.UserID + "';");
-                return Task.FromResult(new Result { Message = "OK!" });
-            }
-            else
-            {
-                connectionHandler.CloseConnection();
-                return Task.FromResult(new Result { Message = "Database couldn't be reached." });
-            }
-        }
-        public override Task<Result> ExitBuilding(User userRequest, ServerCallContext context)
-        {
-            if (connectionHandler.OpenConnection())
-            {
-                connectionHandler.ExecuteMySQLQuery("UPDATE users SET attendance='0' WHERE id='"+ userRequest.UserID + "';");
-                return Task.FromResult(new Result { Message = "OK!" });
-            }
-            else
-            {
-                connectionHandler.CloseConnection();
-                return Task.FromResult(new Result { Message = "Database couldn't be reached." });
-            }
+            return false;
         }
     }
 }
