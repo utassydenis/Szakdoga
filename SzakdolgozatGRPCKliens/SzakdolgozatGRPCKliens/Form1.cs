@@ -104,7 +104,7 @@ namespace SzakdolgozatGRPCKliens
         private void timer1_Tick(object sender, EventArgs e)
         {
             label1.Text = localCardID;
-            if(localCardID != "" && doorListComboBox.Text != "")
+            if(localCardID != null && doorListComboBox.Text != "")
             {
                 if (enterExitComboBox.Text == "Enter")
                 {

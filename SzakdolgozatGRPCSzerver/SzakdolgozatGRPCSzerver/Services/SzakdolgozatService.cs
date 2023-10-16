@@ -19,6 +19,13 @@ namespace SzakdolgozatGRPCSzerver.Services
             {
                 return Task.FromResult(new Result { Message = "This user doesn't have access to this door!" });
             }
+            if(doorEvent.DoorID == 5)
+            {
+                if (!CheckIfUserCanDine(doorEvent))
+                {
+                    return Task.FromResult(new Result { Message = "This user has already dined today or hasn't properly entered the building" });
+                }
+            }
             return Task.FromResult(new Result { Message = "OK!" });
         }
 
@@ -29,9 +36,10 @@ namespace SzakdolgozatGRPCSzerver.Services
                 return Task.FromResult(new Result { Message = "Failed to connect to database." });
             }
             Task<Result> testResult = CheckDoorUsagePrerequisites(doorEvent);
-            if(testResult.Result.Message == "OK!")
+
+            if (testResult.Result.Message == "OK!")
             {
-               MySqlCommand cmd = new MySqlCommand("INSERT INTO door_logs(door_id,card_id,time_entered) "
+                MySqlCommand cmd = new MySqlCommand("INSERT INTO door_logs(door_id,card_id,time_entered) "
                 + "VALUES('" + doorEvent.DoorID + "','"
                 + doorEvent.CardID + "','"
                 + getEventTimeLog() + "');"
@@ -106,20 +114,53 @@ namespace SzakdolgozatGRPCSzerver.Services
         public bool CheckCardValidity(string card_id)
         {
             string logTime = getEventTimeLog();
-            MySqlCommand cmd = new MySqlCommand("SELECT COUNT(*) FROM card_user WHERE card_id='" + card_id 
-                + "' AND start_date <= '"+ logTime 
-                + "' AND (expired IS NULL OR expired > '"+logTime+"');"
-                ,connection);
-            return CheckDatabaseResult(cmd);            
+            MySqlCommand cmd = new MySqlCommand("SELECT COUNT(*) FROM card_user WHERE card_id='" + card_id
+                + "' AND start_date <= '" + logTime
+                + "' AND (expired IS NULL OR expired > '" + logTime + "');"
+                , connection);
+            return CheckDatabaseResult(cmd);
         }
         public bool CheckIfUserHasAccessToDoor(DoorEvent e)
         {
             MySqlCommand cmd = new MySqlCommand("SELECT COUNT(*) FROM door_privilige_requirement " +
                 "INNER JOIN user_priviliges ON door_privilige_requirement.privilige_level = user_priviliges.privilige_level " +
                 "INNER JOIN card_user ON card_user.user_id = user_priviliges.user_id " +
-                "WHERE door_privilige_requirement.door_id = '"+ e.DoorID + "'" +
-                "AND card_user.card_id = '" + e.CardID +"';", connection);
+                "WHERE door_privilige_requirement.door_id = '" + e.DoorID + "'" +
+                "AND card_user.card_id = '" + e.CardID + "';", connection);
             return CheckDatabaseResult(cmd);
+        }
+        public bool CheckIfUserHasEntered(string card_id)
+        {
+            string time = DateTime.Now.Date.ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
+            MySqlCommand cmd = new MySqlCommand("SELECT COUNT(*) FROM door_logs " +
+                "WHERE card_id ='" + card_id 
+                + "', AND time_entered >'" + time + "'"
+                ,connection);
+            int result = int.Parse(cmd.ExecuteScalar() + "");
+            if(result >= 1)
+            {
+                return true;
+            }
+            return false;
+
+        }
+        public bool CheckIfUserCanDine(DoorEvent e)
+        {
+            if (CheckIfUserHasEntered(e.CardID))
+            {
+                string time = DateTime.Now.Date.ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
+                MySqlCommand cmd = new MySqlCommand("SELECT COUNT(*) FROM door_logs " +
+                    "WHERE card_id='" + e.CardID + "', " +
+                    "AND door_id = 5 " +
+                    "AND time_entered >'" + time + "';");
+                int result = int.Parse(cmd.ExecuteScalar() + "");
+                if(result == 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+            
         }
         public bool OpenConnection()
         {
