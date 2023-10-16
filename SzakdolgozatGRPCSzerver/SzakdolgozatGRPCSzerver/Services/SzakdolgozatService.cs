@@ -1,11 +1,5 @@
 using Grpc.Core;
-using SzakdolgozatGRPCSzerver;
 using MySql.Data.MySqlClient;
-using System.Net.Http.Headers;
-using System.Security.Cryptography;
-using MySqlX.XDevAPI.Relational;
-using Microsoft.AspNetCore.Connections;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace SzakdolgozatGRPCSzerver.Services
 {
@@ -14,31 +8,43 @@ namespace SzakdolgozatGRPCSzerver.Services
     {
         MySqlConnection connection = new MySqlConnection("SERVER=localhost;DATABASE=SzakdolgozatDatabase;UID=root;PASSWORD= ;");
 
+        public Task<Result> CheckDoorUsagePrerequisites(DoorEvent doorEvent)
+        {
+
+            if (!CheckCardValidity(doorEvent.CardID))
+            {
+                return Task.FromResult(new Result { Message = "Invalid card!" });
+            }
+            if (!CheckIfUserHasAccessToDoor(doorEvent))
+            {
+                return Task.FromResult(new Result { Message = "This user doesn't have access to this door!" });
+            }
+            return Task.FromResult(new Result { Message = "OK!" });
+        }
+
         public override Task<Result> Enter(DoorEvent doorEvent, ServerCallContext context)
         {
             if (!OpenConnection())
             {
                 return Task.FromResult(new Result { Message = "Failed to connect to database." });
             }
-            if (!CheckCardValidity(doorEvent.CardID))
+            Task<Result> testResult = CheckDoorUsagePrerequisites(doorEvent);
+            if(testResult.Result.Message == "OK!")
             {
-                CloseConnection();
-                return Task.FromResult(new Result { Message = "Invalid card!" });
-            }
-            if (!CheckIfUserCanEnter(doorEvent))
-            {
-                CloseConnection();
-                return Task.FromResult(new Result { Message = "This user doesn't have access to this door!" });
-            }
-
-            MySqlCommand cmd = new MySqlCommand("INSERT INTO door_logs(door_id,card_id,time_entered) "
+               MySqlCommand cmd = new MySqlCommand("INSERT INTO door_logs(door_id,card_id,time_entered) "
                 + "VALUES('" + doorEvent.DoorID + "','"
                 + doorEvent.CardID + "','"
-                + eventTimeLog() + "');"
+                + getEventTimeLog() + "');"
                 , connection);
-            cmd.ExecuteNonQuery();
-            CloseConnection();
-            return Task.FromResult(new Result { Message = "OK!" });
+                cmd.ExecuteNonQuery();
+                CloseConnection();
+                return testResult;
+            }
+            else
+            {
+                CloseConnection();
+                return testResult;
+            }
         }
 
         public override Task<Result> Exit(DoorEvent doorEvent, ServerCallContext context)
@@ -47,81 +53,73 @@ namespace SzakdolgozatGRPCSzerver.Services
             {
                 return Task.FromResult(new Result { Message = "Failed to connect to database." });
             }
-            if (!CheckCardValidity(doorEvent.CardID))
+            Task<Result> testResult = CheckDoorUsagePrerequisites(doorEvent);
+            if (testResult.Result.Message == "OK!")
+            {
+                MySqlCommand cmd = new MySqlCommand("INSERT INTO door_logs(door_id,card_id,time_exited) "
+                    + "VALUES('" + doorEvent.DoorID + "','"
+                    + doorEvent.CardID + "','"
+                    + getEventTimeLog() + "');"
+                    , connection);
+                cmd.ExecuteNonQuery();
+                CloseConnection();
+                return testResult;
+            }
+            else
             {
                 CloseConnection();
-                return Task.FromResult(new Result { Message = "Invalid card!" });
+                return testResult;
             }
-            if (!CheckIfUserCanEnter(doorEvent))
-            {
-                CloseConnection();
-                return Task.FromResult(new Result { Message = "This user doesn't have access to this door!" });
-            }
-
-            MySqlCommand cmd = new MySqlCommand("UPDATE door_logs SET time_exited = '" + eventTimeLog() 
-                + "' WHERE door_id = '" + doorEvent.DoorID 
-                + "' AND card_id = '" + doorEvent.CardID 
-                + "' AND time_exited IS NULL AND time_entered = (SELECT MAX(time_entered) FROM door_logs);" 
-                , connection);
-            cmd.ExecuteNonQuery();
-            CloseConnection();
-            return Task.FromResult(new Result { Message = "OK!" });
         }
 
-        List<DoorInformation> doorInformationList = new List<DoorInformation>();
         public override async Task ListDoors(Empty e, IServerStreamWriter<DoorInformation> responseStream, ServerCallContext context)
         {
             if (OpenConnection())
             {
+
                 MySqlCommand cmd = new MySqlCommand("SELECT * FROM doors", connection);
                 MySqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
                     DoorInformation doorInformation = new DoorInformation();
-
                     doorInformation.DoorID = int.Parse(reader.GetString("door_id"));
                     doorInformation.DoorName = reader.GetString("door_name");
-                    doorInformationList.Add(doorInformation);
+                    await responseStream.WriteAsync(doorInformation);
                 }
-            }
 
-            foreach(var information in doorInformationList)
-            {
-                await responseStream.WriteAsync(information);
             }
+            //Kezelni ha nincs connection
         }
-        public bool CheckCardValidity(string card_id)
+        public string getEventTimeLog()
         {
-            string logTime = eventTimeLog();
-            MySqlCommand cmd = new MySqlCommand("SELECT COUNT(*) FROM card_user WHERE card_id='" + card_id 
-                + "' AND start_date <= '"+ logTime 
-                + "' AND (expired IS NULL OR expired > '"+logTime+"');"
-                ,connection);
-            int result = int.Parse(cmd.ExecuteScalar() + "");
-            if(result == 1)
+            return DateTime.Now.ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
+        }
+        public bool CheckDatabaseResult(MySqlCommand m)
+        {
+            int result = int.Parse(m.ExecuteScalar() + "");
+            if (result == 1)
             {
                 return true;
             }
             return false;
         }
-        public string eventTimeLog()
+        public bool CheckCardValidity(string card_id)
         {
-            return DateTime.Now.ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
+            string logTime = getEventTimeLog();
+            MySqlCommand cmd = new MySqlCommand("SELECT COUNT(*) FROM card_user WHERE card_id='" + card_id 
+                + "' AND start_date <= '"+ logTime 
+                + "' AND (expired IS NULL OR expired > '"+logTime+"');"
+                ,connection);
+            return CheckDatabaseResult(cmd);            
         }
-        public bool CheckIfUserCanEnter(DoorEvent e)
+        public bool CheckIfUserHasAccessToDoor(DoorEvent e)
         {
             MySqlCommand cmd = new MySqlCommand("SELECT COUNT(*) FROM door_privilige_requirement " +
                 "INNER JOIN user_priviliges ON door_privilige_requirement.privilige_level = user_priviliges.privilige_level " +
                 "INNER JOIN card_user ON card_user.user_id = user_priviliges.user_id " +
                 "WHERE door_privilige_requirement.door_id = '"+ e.DoorID + "'" +
                 "AND card_user.card_id = '" + e.CardID +"';", connection);
-            
-            int result = int.Parse(cmd.ExecuteScalar() + "");
-            if(result == 1)
-            {
-                return true;
-            }
-            return false;
+            return CheckDatabaseResult(cmd);
         }
         public bool OpenConnection()
         {

@@ -4,10 +4,7 @@ using MiFare;
 using MiFare.Classic;
 using MiFare.Devices;
 using MiFare.PcSc;
-
 using System.Diagnostics;
-using System.Text;
-using SzakdolgozatGRPCKliens;
 namespace SzakdolgozatGRPCKliens
 {
     public partial class Form1 : Form
@@ -42,7 +39,7 @@ namespace SzakdolgozatGRPCKliens
             }
             catch (RpcException ex)
             {
-
+                label1.Text = ex.Message;
             }
         }
 
@@ -53,7 +50,7 @@ namespace SzakdolgozatGRPCKliens
                 reader = await CardReader.FindAsync();
                 if (reader == null)
                 {
-                    //label1.Text = "No Readers Found";
+                    label1.Text = "No Readers Found";
                     return;
                 }
 
@@ -62,7 +59,7 @@ namespace SzakdolgozatGRPCKliens
             }
             catch (Exception e)
             {
-                //label1.Text = "Exception: " + e.Message;
+                label1.Text = "Exception: " + e.Message;
             }
         }
         private void CardRemoved(object sender, EventArgs e)
@@ -81,7 +78,7 @@ namespace SzakdolgozatGRPCKliens
             }
             catch (Exception ex)
             {
-                //label1.Text = "CardAdded Exception: " + ex.Message;
+                label1.Text = "CardAdded Exception: " + ex.Message;
             }
         }
         private async Task HandleCard(CardEventArgs args)
@@ -90,12 +87,8 @@ namespace SzakdolgozatGRPCKliens
             {
                 card?.Dispose();
                 card = args.SmartCard.CreateMiFareCard();
-
                 var localCard = card;
-
                 var cardIdentification = await localCard.GetCardInfo();
-                //label1.Text = ("Connected to card\r\nPC/SC device class: " + cardIdentification.PcscDeviceClass.ToString() + "\r\nCard name: " + cardIdentification.PcscCardName.ToString());
-
                 if (cardIdentification.PcscDeviceClass == MiFare.PcSc.DeviceClass.StorageClass
                      && (cardIdentification.PcscCardName == CardName.MifareStandard1K || cardIdentification.PcscCardName == CardName.MifareStandard4K))
                 {
@@ -105,10 +98,9 @@ namespace SzakdolgozatGRPCKliens
             }
             catch (Exception e)
             {
-                //label1.Text = ("HandleCard Exception: " + e.Message);
+                label1.Text = ("HandleCard Exception: " + e.Message);
             }
         }
-
         private void timer1_Tick(object sender, EventArgs e)
         {
             label1.Text = localCardID;
@@ -124,49 +116,40 @@ namespace SzakdolgozatGRPCKliens
                     ExitDoor();
                     localCardID = "";
                 }
-
             }
-
-
         }
-
+        private DoorEvent SetupDoorEvent()
+        {
+            DoorInformation tmp = doors.Find(x => x.DoorName == doorListComboBox.SelectedItem.ToString());
+            label2.Text = tmp.DoorName;
+            DoorEvent tmpEvent = new DoorEvent();
+            tmpEvent.CardID = localCardID;
+            tmpEvent.DoorID = tmp.DoorID;
+            tmpEvent.DoorName = tmp.DoorName;
+            return tmpEvent;
+        }
         private void EnterDoor()
         {
             try
             {
-                DoorInformation tmp = doors.Find(x => x.DoorName == doorListComboBox.SelectedItem.ToString());
-                label2.Text = tmp.DoorName;
-                DoorEvent tmpEvent = new DoorEvent();
-                tmpEvent.CardID = localCardID;
-                tmpEvent.DoorID = tmp.DoorID;
-                tmpEvent.DoorName = tmp.DoorName;
-
-                Result res = client.Enter(tmpEvent);
+                Result res = client.Enter(SetupDoorEvent());
                 label2.Text = res.ToString();
-
             }
-            catch
+            catch(RpcException ex)
             {
-
+                label2.Text = ex.Message;
             }
         }
         private void ExitDoor()
         {
             try
             {
-                DoorInformation tmp = doors.Find(x => x.DoorName == doorListComboBox.SelectedItem.ToString());
-                label2.Text = tmp.DoorName;
-                DoorEvent tmpEvent = new DoorEvent();
-                tmpEvent.CardID = localCardID;
-                tmpEvent.DoorID = tmp.DoorID;
-                tmpEvent.DoorName = tmp.DoorName;
-
-                Result res = client.Exit(tmpEvent);
+                Result res = client.Exit(SetupDoorEvent());
                 label2.Text = res.ToString();
             }
-            catch
+            catch(RpcException ex)
             {
-
+                label2.Text = ex.Message;
             }
         }
     }

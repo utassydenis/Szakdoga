@@ -25,10 +25,10 @@ namespace SzakdolgozatGRPCSzerver {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "Ch5Qcm90b3Mvc3pha2RvbGdvemF0Z3JlZXQucHJvdG8SDFN6YWtkb2xnb3ph",
-            "dCIHCgVFbXB0eSIZCgZSZXN1bHQSDwoHbWVzc2FnZRgBIAEoCSJACglEb29y",
-            "RXZlbnQSDwoHY2FyZF9JRBgBIAEoCRIPCgdkb29yX0lEGAIgASgFEhEKCWRv",
-            "b3JfbmFtZRgDIAEoCSI1Cg9Eb29ySW5mb3JtYXRpb24SDwoHZG9vcl9JRBgB",
-            "IAEoBRIRCglkb29yX25hbWUYAiABKAkyxgIKE1N6YWtkb2xnb3phdEdyZWV0",
+            "dCIHCgVFbXB0eSIZCgZSZXN1bHQSDwoHbWVzc2FnZRgBIAEoCSI1Cg9Eb29y",
+            "SW5mb3JtYXRpb24SDwoHZG9vcl9JRBgBIAEoBRIRCglkb29yX25hbWUYAiAB",
+            "KAkiQAoJRG9vckV2ZW50Eg8KB2NhcmRfSUQYASABKAkSDwoHZG9vcl9JRBgC",
+            "IAEoBRIRCglkb29yX25hbWUYAyABKAkyxgIKE1N6YWtkb2xnb3phdEdyZWV0",
             "ZXISNgoFRW50ZXISFy5TemFrZG9sZ296YXQuRG9vckV2ZW50GhQuU3pha2Rv",
             "bGdvemF0LlJlc3VsdBI1CgRFeGl0EhcuU3pha2RvbGdvemF0LkRvb3JFdmVu",
             "dBoULlN6YWtkb2xnb3phdC5SZXN1bHQSQQoJTGlzdERvb3JzEhMuU3pha2Rv",
@@ -42,8 +42,8 @@ namespace SzakdolgozatGRPCSzerver {
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::SzakdolgozatGRPCSzerver.Empty), global::SzakdolgozatGRPCSzerver.Empty.Parser, null, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::SzakdolgozatGRPCSzerver.Result), global::SzakdolgozatGRPCSzerver.Result.Parser, new[]{ "Message" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::SzakdolgozatGRPCSzerver.DoorEvent), global::SzakdolgozatGRPCSzerver.DoorEvent.Parser, new[]{ "CardID", "DoorID", "DoorName" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::SzakdolgozatGRPCSzerver.DoorInformation), global::SzakdolgozatGRPCSzerver.DoorInformation.Parser, new[]{ "DoorID", "DoorName" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::SzakdolgozatGRPCSzerver.DoorInformation), global::SzakdolgozatGRPCSzerver.DoorInformation.Parser, new[]{ "DoorID", "DoorName" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::SzakdolgozatGRPCSzerver.DoorEvent), global::SzakdolgozatGRPCSzerver.DoorEvent.Parser, new[]{ "CardID", "DoorID", "DoorName" }, null, null, null, null)
           }));
     }
     #endregion
@@ -358,250 +358,6 @@ namespace SzakdolgozatGRPCSzerver {
 
   }
 
-  public sealed partial class DoorEvent : pb::IMessage<DoorEvent>
-  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      , pb::IBufferMessage
-  #endif
-  {
-    private static readonly pb::MessageParser<DoorEvent> _parser = new pb::MessageParser<DoorEvent>(() => new DoorEvent());
-    private pb::UnknownFieldSet _unknownFields;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<DoorEvent> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::SzakdolgozatGRPCSzerver.SzakdolgozatgreetReflection.Descriptor.MessageTypes[2]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public DoorEvent() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public DoorEvent(DoorEvent other) : this() {
-      cardID_ = other.cardID_;
-      doorID_ = other.doorID_;
-      doorName_ = other.doorName_;
-      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public DoorEvent Clone() {
-      return new DoorEvent(this);
-    }
-
-    /// <summary>Field number for the "card_ID" field.</summary>
-    public const int CardIDFieldNumber = 1;
-    private string cardID_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string CardID {
-      get { return cardID_; }
-      set {
-        cardID_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "door_ID" field.</summary>
-    public const int DoorIDFieldNumber = 2;
-    private int doorID_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int DoorID {
-      get { return doorID_; }
-      set {
-        doorID_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "door_name" field.</summary>
-    public const int DoorNameFieldNumber = 3;
-    private string doorName_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string DoorName {
-      get { return doorName_; }
-      set {
-        doorName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as DoorEvent);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(DoorEvent other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (CardID != other.CardID) return false;
-      if (DoorID != other.DoorID) return false;
-      if (DoorName != other.DoorName) return false;
-      return Equals(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (CardID.Length != 0) hash ^= CardID.GetHashCode();
-      if (DoorID != 0) hash ^= DoorID.GetHashCode();
-      if (DoorName.Length != 0) hash ^= DoorName.GetHashCode();
-      if (_unknownFields != null) {
-        hash ^= _unknownFields.GetHashCode();
-      }
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      output.WriteRawMessage(this);
-    #else
-      if (CardID.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(CardID);
-      }
-      if (DoorID != 0) {
-        output.WriteRawTag(16);
-        output.WriteInt32(DoorID);
-      }
-      if (DoorName.Length != 0) {
-        output.WriteRawTag(26);
-        output.WriteString(DoorName);
-      }
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(output);
-      }
-    #endif
-    }
-
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (CardID.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(CardID);
-      }
-      if (DoorID != 0) {
-        output.WriteRawTag(16);
-        output.WriteInt32(DoorID);
-      }
-      if (DoorName.Length != 0) {
-        output.WriteRawTag(26);
-        output.WriteString(DoorName);
-      }
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(ref output);
-      }
-    }
-    #endif
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (CardID.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(CardID);
-      }
-      if (DoorID != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(DoorID);
-      }
-      if (DoorName.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(DoorName);
-      }
-      if (_unknownFields != null) {
-        size += _unknownFields.CalculateSize();
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(DoorEvent other) {
-      if (other == null) {
-        return;
-      }
-      if (other.CardID.Length != 0) {
-        CardID = other.CardID;
-      }
-      if (other.DoorID != 0) {
-        DoorID = other.DoorID;
-      }
-      if (other.DoorName.Length != 0) {
-        DoorName = other.DoorName;
-      }
-      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      input.ReadRawMessage(this);
-    #else
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
-            break;
-          case 10: {
-            CardID = input.ReadString();
-            break;
-          }
-          case 16: {
-            DoorID = input.ReadInt32();
-            break;
-          }
-          case 26: {
-            DoorName = input.ReadString();
-            break;
-          }
-        }
-      }
-    #endif
-    }
-
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
-            break;
-          case 10: {
-            CardID = input.ReadString();
-            break;
-          }
-          case 16: {
-            DoorID = input.ReadInt32();
-            break;
-          }
-          case 26: {
-            DoorName = input.ReadString();
-            break;
-          }
-        }
-      }
-    }
-    #endif
-
-  }
-
   public sealed partial class DoorInformation : pb::IMessage<DoorInformation>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -614,7 +370,7 @@ namespace SzakdolgozatGRPCSzerver {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::SzakdolgozatGRPCSzerver.SzakdolgozatgreetReflection.Descriptor.MessageTypes[3]; }
+      get { return global::SzakdolgozatGRPCSzerver.SzakdolgozatgreetReflection.Descriptor.MessageTypes[2]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -800,6 +556,253 @@ namespace SzakdolgozatGRPCSzerver {
             break;
           }
           case 18: {
+            DoorName = input.ReadString();
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
+  public sealed partial class DoorEvent : pb::IMessage<DoorEvent>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<DoorEvent> _parser = new pb::MessageParser<DoorEvent>(() => new DoorEvent());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<DoorEvent> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::SzakdolgozatGRPCSzerver.SzakdolgozatgreetReflection.Descriptor.MessageTypes[3]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public DoorEvent() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public DoorEvent(DoorEvent other) : this() {
+      cardID_ = other.cardID_;
+      doorID_ = other.doorID_;
+      doorName_ = other.doorName_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public DoorEvent Clone() {
+      return new DoorEvent(this);
+    }
+
+    /// <summary>Field number for the "card_ID" field.</summary>
+    public const int CardIDFieldNumber = 1;
+    private string cardID_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string CardID {
+      get { return cardID_; }
+      set {
+        cardID_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "door_ID" field.</summary>
+    public const int DoorIDFieldNumber = 2;
+    private int doorID_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int DoorID {
+      get { return doorID_; }
+      set {
+        doorID_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "door_name" field.</summary>
+    public const int DoorNameFieldNumber = 3;
+    private string doorName_ = "";
+    /// <summary>
+    ///DoorInformation door_info = 2;
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string DoorName {
+      get { return doorName_; }
+      set {
+        doorName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as DoorEvent);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(DoorEvent other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (CardID != other.CardID) return false;
+      if (DoorID != other.DoorID) return false;
+      if (DoorName != other.DoorName) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (CardID.Length != 0) hash ^= CardID.GetHashCode();
+      if (DoorID != 0) hash ^= DoorID.GetHashCode();
+      if (DoorName.Length != 0) hash ^= DoorName.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (CardID.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(CardID);
+      }
+      if (DoorID != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(DoorID);
+      }
+      if (DoorName.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteString(DoorName);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (CardID.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(CardID);
+      }
+      if (DoorID != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(DoorID);
+      }
+      if (DoorName.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteString(DoorName);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (CardID.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(CardID);
+      }
+      if (DoorID != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(DoorID);
+      }
+      if (DoorName.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(DoorName);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(DoorEvent other) {
+      if (other == null) {
+        return;
+      }
+      if (other.CardID.Length != 0) {
+        CardID = other.CardID;
+      }
+      if (other.DoorID != 0) {
+        DoorID = other.DoorID;
+      }
+      if (other.DoorName.Length != 0) {
+        DoorName = other.DoorName;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            CardID = input.ReadString();
+            break;
+          }
+          case 16: {
+            DoorID = input.ReadInt32();
+            break;
+          }
+          case 26: {
+            DoorName = input.ReadString();
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10: {
+            CardID = input.ReadString();
+            break;
+          }
+          case 16: {
+            DoorID = input.ReadInt32();
+            break;
+          }
+          case 26: {
             DoorName = input.ReadString();
             break;
           }
