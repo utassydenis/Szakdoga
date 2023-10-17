@@ -26,9 +26,7 @@ message DoorInformation{
 }
 message DoorEvent{
 	string card_ID = 1;
-	int32 door_ID = 2;
-	string door_name = 3;
-	//DoorInformation door_info = 2;
+	DoorInformation door_info = 2;
 }
 
 

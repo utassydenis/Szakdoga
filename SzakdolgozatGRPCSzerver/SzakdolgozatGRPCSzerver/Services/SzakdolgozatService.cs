@@ -19,7 +19,7 @@ namespace SzakdolgozatGRPCSzerver.Services
             {
                 return Task.FromResult(new Result { Message = "This user doesn't have access to this door!" });
             }
-            if(doorEvent.DoorID == 5)
+            if(doorEvent.DoorInfo.DoorID == 5)
             {
                 if (!CheckIfUserCanDine(doorEvent))
                 {
@@ -40,7 +40,7 @@ namespace SzakdolgozatGRPCSzerver.Services
             if (testResult.Result.Message == "OK!")
             {
                 MySqlCommand cmd = new MySqlCommand("INSERT INTO door_logs(door_id,card_id,time_entered) "
-                + "VALUES('" + doorEvent.DoorID + "','"
+                + "VALUES('" + doorEvent.DoorInfo.DoorID + "','"
                 + doorEvent.CardID + "','"
                 + getEventTimeLog() + "');"
                 , connection);
@@ -65,7 +65,7 @@ namespace SzakdolgozatGRPCSzerver.Services
             if (testResult.Result.Message == "OK!")
             {
                 MySqlCommand cmd = new MySqlCommand("INSERT INTO door_logs(door_id,card_id,time_exited) "
-                    + "VALUES('" + doorEvent.DoorID + "','"
+                    + "VALUES('" + doorEvent.DoorInfo.DoorID + "','"
                     + doorEvent.CardID + "','"
                     + getEventTimeLog() + "');"
                     , connection);
@@ -125,7 +125,7 @@ namespace SzakdolgozatGRPCSzerver.Services
             MySqlCommand cmd = new MySqlCommand("SELECT COUNT(*) FROM door_privilige_requirement " +
                 "INNER JOIN user_priviliges ON door_privilige_requirement.privilige_level = user_priviliges.privilige_level " +
                 "INNER JOIN card_user ON card_user.user_id = user_priviliges.user_id " +
-                "WHERE door_privilige_requirement.door_id = '" + e.DoorID + "'" +
+                "WHERE door_privilige_requirement.door_id = '" + e.DoorInfo.DoorID + "'" +
                 "AND card_user.card_id = '" + e.CardID + "';", connection);
             return CheckDatabaseResult(cmd);
         }

@@ -78,7 +78,7 @@ namespace SzakdolgozatGRPCKliens
             }
             catch (Exception ex)
             {
-                label1.Text = "CardAdded Exception: " + ex.Message;
+                label1.Text = "CardAdded Exception: " + ex.Message;  
             }
         }
         private async Task HandleCard(CardEventArgs args)
@@ -124,8 +124,7 @@ namespace SzakdolgozatGRPCKliens
             label2.Text = tmp.DoorName;
             DoorEvent tmpEvent = new DoorEvent();
             tmpEvent.CardID = localCardID;
-            tmpEvent.DoorID = tmp.DoorID;
-            tmpEvent.DoorName = tmp.DoorName;
+            tmpEvent.DoorInfo = tmp;
             return tmpEvent;
         }
         private void EnterDoor()

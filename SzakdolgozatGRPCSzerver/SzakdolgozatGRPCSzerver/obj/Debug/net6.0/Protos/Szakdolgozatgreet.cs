@@ -27,23 +27,23 @@ namespace SzakdolgozatGRPCSzerver {
             "Ch5Qcm90b3Mvc3pha2RvbGdvemF0Z3JlZXQucHJvdG8SDFN6YWtkb2xnb3ph",
             "dCIHCgVFbXB0eSIZCgZSZXN1bHQSDwoHbWVzc2FnZRgBIAEoCSI1Cg9Eb29y",
             "SW5mb3JtYXRpb24SDwoHZG9vcl9JRBgBIAEoBRIRCglkb29yX25hbWUYAiAB",
-            "KAkiQAoJRG9vckV2ZW50Eg8KB2NhcmRfSUQYASABKAkSDwoHZG9vcl9JRBgC",
-            "IAEoBRIRCglkb29yX25hbWUYAyABKAkyxgIKE1N6YWtkb2xnb3phdEdyZWV0",
-            "ZXISNgoFRW50ZXISFy5TemFrZG9sZ296YXQuRG9vckV2ZW50GhQuU3pha2Rv",
-            "bGdvemF0LlJlc3VsdBI1CgRFeGl0EhcuU3pha2RvbGdvemF0LkRvb3JFdmVu",
-            "dBoULlN6YWtkb2xnb3phdC5SZXN1bHQSQQoJTGlzdERvb3JzEhMuU3pha2Rv",
-            "bGdvemF0LkVtcHR5Gh0uU3pha2RvbGdvemF0LkRvb3JJbmZvcm1hdGlvbjAB",
-            "Ej4KDUVudGVyRW50cmFuY2USFy5TemFrZG9sZ296YXQuRG9vckV2ZW50GhQu",
-            "U3pha2RvbGdvemF0LlJlc3VsdBI9CgxFeGl0RW50cmFuY2USFy5TemFrZG9s",
-            "Z296YXQuRG9vckV2ZW50GhQuU3pha2RvbGdvemF0LlJlc3VsdEIaqgIXU3ph",
-            "a2RvbGdvemF0R1JQQ1N6ZXJ2ZXJiBnByb3RvMw=="));
+            "KAkiTgoJRG9vckV2ZW50Eg8KB2NhcmRfSUQYASABKAkSMAoJZG9vcl9pbmZv",
+            "GAIgASgLMh0uU3pha2RvbGdvemF0LkRvb3JJbmZvcm1hdGlvbjLGAgoTU3ph",
+            "a2RvbGdvemF0R3JlZXRlchI2CgVFbnRlchIXLlN6YWtkb2xnb3phdC5Eb29y",
+            "RXZlbnQaFC5TemFrZG9sZ296YXQuUmVzdWx0EjUKBEV4aXQSFy5TemFrZG9s",
+            "Z296YXQuRG9vckV2ZW50GhQuU3pha2RvbGdvemF0LlJlc3VsdBJBCglMaXN0",
+            "RG9vcnMSEy5TemFrZG9sZ296YXQuRW1wdHkaHS5TemFrZG9sZ296YXQuRG9v",
+            "ckluZm9ybWF0aW9uMAESPgoNRW50ZXJFbnRyYW5jZRIXLlN6YWtkb2xnb3ph",
+            "dC5Eb29yRXZlbnQaFC5TemFrZG9sZ296YXQuUmVzdWx0Ej0KDEV4aXRFbnRy",
+            "YW5jZRIXLlN6YWtkb2xnb3phdC5Eb29yRXZlbnQaFC5TemFrZG9sZ296YXQu",
+            "UmVzdWx0QhqqAhdTemFrZG9sZ296YXRHUlBDU3plcnZlcmIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::SzakdolgozatGRPCSzerver.Empty), global::SzakdolgozatGRPCSzerver.Empty.Parser, null, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::SzakdolgozatGRPCSzerver.Result), global::SzakdolgozatGRPCSzerver.Result.Parser, new[]{ "Message" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::SzakdolgozatGRPCSzerver.DoorInformation), global::SzakdolgozatGRPCSzerver.DoorInformation.Parser, new[]{ "DoorID", "DoorName" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::SzakdolgozatGRPCSzerver.DoorEvent), global::SzakdolgozatGRPCSzerver.DoorEvent.Parser, new[]{ "CardID", "DoorID", "DoorName" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::SzakdolgozatGRPCSzerver.DoorEvent), global::SzakdolgozatGRPCSzerver.DoorEvent.Parser, new[]{ "CardID", "DoorInfo" }, null, null, null, null)
           }));
     }
     #endregion
@@ -596,8 +596,7 @@ namespace SzakdolgozatGRPCSzerver {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public DoorEvent(DoorEvent other) : this() {
       cardID_ = other.cardID_;
-      doorID_ = other.doorID_;
-      doorName_ = other.doorName_;
+      doorInfo_ = other.doorInfo_ != null ? other.doorInfo_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -617,28 +616,14 @@ namespace SzakdolgozatGRPCSzerver {
       }
     }
 
-    /// <summary>Field number for the "door_ID" field.</summary>
-    public const int DoorIDFieldNumber = 2;
-    private int doorID_;
+    /// <summary>Field number for the "door_info" field.</summary>
+    public const int DoorInfoFieldNumber = 2;
+    private global::SzakdolgozatGRPCSzerver.DoorInformation doorInfo_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int DoorID {
-      get { return doorID_; }
+    public global::SzakdolgozatGRPCSzerver.DoorInformation DoorInfo {
+      get { return doorInfo_; }
       set {
-        doorID_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "door_name" field.</summary>
-    public const int DoorNameFieldNumber = 3;
-    private string doorName_ = "";
-    /// <summary>
-    ///DoorInformation door_info = 2;
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string DoorName {
-      get { return doorName_; }
-      set {
-        doorName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        doorInfo_ = value;
       }
     }
 
@@ -656,8 +641,7 @@ namespace SzakdolgozatGRPCSzerver {
         return true;
       }
       if (CardID != other.CardID) return false;
-      if (DoorID != other.DoorID) return false;
-      if (DoorName != other.DoorName) return false;
+      if (!object.Equals(DoorInfo, other.DoorInfo)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -665,8 +649,7 @@ namespace SzakdolgozatGRPCSzerver {
     public override int GetHashCode() {
       int hash = 1;
       if (CardID.Length != 0) hash ^= CardID.GetHashCode();
-      if (DoorID != 0) hash ^= DoorID.GetHashCode();
-      if (DoorName.Length != 0) hash ^= DoorName.GetHashCode();
+      if (doorInfo_ != null) hash ^= DoorInfo.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -687,13 +670,9 @@ namespace SzakdolgozatGRPCSzerver {
         output.WriteRawTag(10);
         output.WriteString(CardID);
       }
-      if (DoorID != 0) {
-        output.WriteRawTag(16);
-        output.WriteInt32(DoorID);
-      }
-      if (DoorName.Length != 0) {
-        output.WriteRawTag(26);
-        output.WriteString(DoorName);
+      if (doorInfo_ != null) {
+        output.WriteRawTag(18);
+        output.WriteMessage(DoorInfo);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -708,13 +687,9 @@ namespace SzakdolgozatGRPCSzerver {
         output.WriteRawTag(10);
         output.WriteString(CardID);
       }
-      if (DoorID != 0) {
-        output.WriteRawTag(16);
-        output.WriteInt32(DoorID);
-      }
-      if (DoorName.Length != 0) {
-        output.WriteRawTag(26);
-        output.WriteString(DoorName);
+      if (doorInfo_ != null) {
+        output.WriteRawTag(18);
+        output.WriteMessage(DoorInfo);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -728,11 +703,8 @@ namespace SzakdolgozatGRPCSzerver {
       if (CardID.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(CardID);
       }
-      if (DoorID != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(DoorID);
-      }
-      if (DoorName.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(DoorName);
+      if (doorInfo_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(DoorInfo);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -748,11 +720,11 @@ namespace SzakdolgozatGRPCSzerver {
       if (other.CardID.Length != 0) {
         CardID = other.CardID;
       }
-      if (other.DoorID != 0) {
-        DoorID = other.DoorID;
-      }
-      if (other.DoorName.Length != 0) {
-        DoorName = other.DoorName;
+      if (other.doorInfo_ != null) {
+        if (doorInfo_ == null) {
+          DoorInfo = new global::SzakdolgozatGRPCSzerver.DoorInformation();
+        }
+        DoorInfo.MergeFrom(other.DoorInfo);
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -772,12 +744,11 @@ namespace SzakdolgozatGRPCSzerver {
             CardID = input.ReadString();
             break;
           }
-          case 16: {
-            DoorID = input.ReadInt32();
-            break;
-          }
-          case 26: {
-            DoorName = input.ReadString();
+          case 18: {
+            if (doorInfo_ == null) {
+              DoorInfo = new global::SzakdolgozatGRPCSzerver.DoorInformation();
+            }
+            input.ReadMessage(DoorInfo);
             break;
           }
         }
@@ -798,12 +769,11 @@ namespace SzakdolgozatGRPCSzerver {
             CardID = input.ReadString();
             break;
           }
-          case 16: {
-            DoorID = input.ReadInt32();
-            break;
-          }
-          case 26: {
-            DoorName = input.ReadString();
+          case 18: {
+            if (doorInfo_ == null) {
+              DoorInfo = new global::SzakdolgozatGRPCSzerver.DoorInformation();
+            }
+            input.ReadMessage(DoorInfo);
             break;
           }
         }

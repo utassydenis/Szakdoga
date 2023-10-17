@@ -25,25 +25,25 @@ namespace SzakdolgozatGRPCKliens {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "Ch5Qcm90b3Mvc3pha2RvbGdvemF0Z3JlZXQucHJvdG8SDFN6YWtkb2xnb3ph",
-            "dCIHCgVFbXB0eSIZCgZSZXN1bHQSDwoHbWVzc2FnZRgBIAEoCSJACglEb29y",
-            "RXZlbnQSDwoHY2FyZF9JRBgBIAEoCRIPCgdkb29yX0lEGAIgASgFEhEKCWRv",
-            "b3JfbmFtZRgDIAEoCSI1Cg9Eb29ySW5mb3JtYXRpb24SDwoHZG9vcl9JRBgB",
-            "IAEoBRIRCglkb29yX25hbWUYAiABKAkyxgIKE1N6YWtkb2xnb3phdEdyZWV0",
-            "ZXISNgoFRW50ZXISFy5TemFrZG9sZ296YXQuRG9vckV2ZW50GhQuU3pha2Rv",
-            "bGdvemF0LlJlc3VsdBI1CgRFeGl0EhcuU3pha2RvbGdvemF0LkRvb3JFdmVu",
-            "dBoULlN6YWtkb2xnb3phdC5SZXN1bHQSQQoJTGlzdERvb3JzEhMuU3pha2Rv",
-            "bGdvemF0LkVtcHR5Gh0uU3pha2RvbGdvemF0LkRvb3JJbmZvcm1hdGlvbjAB",
-            "Ej4KDUVudGVyRW50cmFuY2USFy5TemFrZG9sZ296YXQuRG9vckV2ZW50GhQu",
-            "U3pha2RvbGdvemF0LlJlc3VsdBI9CgxFeGl0RW50cmFuY2USFy5TemFrZG9s",
-            "Z296YXQuRG9vckV2ZW50GhQuU3pha2RvbGdvemF0LlJlc3VsdEIZqgIWU3ph",
-            "a2RvbGdvemF0R1JQQ0tsaWVuc2IGcHJvdG8z"));
+            "dCIHCgVFbXB0eSIZCgZSZXN1bHQSDwoHbWVzc2FnZRgBIAEoCSI1Cg9Eb29y",
+            "SW5mb3JtYXRpb24SDwoHZG9vcl9JRBgBIAEoBRIRCglkb29yX25hbWUYAiAB",
+            "KAkiTgoJRG9vckV2ZW50Eg8KB2NhcmRfSUQYASABKAkSMAoJZG9vcl9pbmZv",
+            "GAIgASgLMh0uU3pha2RvbGdvemF0LkRvb3JJbmZvcm1hdGlvbjLGAgoTU3ph",
+            "a2RvbGdvemF0R3JlZXRlchI2CgVFbnRlchIXLlN6YWtkb2xnb3phdC5Eb29y",
+            "RXZlbnQaFC5TemFrZG9sZ296YXQuUmVzdWx0EjUKBEV4aXQSFy5TemFrZG9s",
+            "Z296YXQuRG9vckV2ZW50GhQuU3pha2RvbGdvemF0LlJlc3VsdBJBCglMaXN0",
+            "RG9vcnMSEy5TemFrZG9sZ296YXQuRW1wdHkaHS5TemFrZG9sZ296YXQuRG9v",
+            "ckluZm9ybWF0aW9uMAESPgoNRW50ZXJFbnRyYW5jZRIXLlN6YWtkb2xnb3ph",
+            "dC5Eb29yRXZlbnQaFC5TemFrZG9sZ296YXQuUmVzdWx0Ej0KDEV4aXRFbnRy",
+            "YW5jZRIXLlN6YWtkb2xnb3phdC5Eb29yRXZlbnQaFC5TemFrZG9sZ296YXQu",
+            "UmVzdWx0QhmqAhZTemFrZG9sZ296YXRHUlBDS2xpZW5zYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::SzakdolgozatGRPCKliens.Empty), global::SzakdolgozatGRPCKliens.Empty.Parser, null, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::SzakdolgozatGRPCKliens.Result), global::SzakdolgozatGRPCKliens.Result.Parser, new[]{ "Message" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::SzakdolgozatGRPCKliens.DoorEvent), global::SzakdolgozatGRPCKliens.DoorEvent.Parser, new[]{ "CardID", "DoorID", "DoorName" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::SzakdolgozatGRPCKliens.DoorInformation), global::SzakdolgozatGRPCKliens.DoorInformation.Parser, new[]{ "DoorID", "DoorName" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::SzakdolgozatGRPCKliens.DoorInformation), global::SzakdolgozatGRPCKliens.DoorInformation.Parser, new[]{ "DoorID", "DoorName" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::SzakdolgozatGRPCKliens.DoorEvent), global::SzakdolgozatGRPCKliens.DoorEvent.Parser, new[]{ "CardID", "DoorInfo" }, null, null, null, null)
           }));
     }
     #endregion
@@ -391,269 +391,6 @@ namespace SzakdolgozatGRPCKliens {
 
   }
 
-  public sealed partial class DoorEvent : pb::IMessage<DoorEvent>
-  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      , pb::IBufferMessage
-  #endif
-  {
-    private static readonly pb::MessageParser<DoorEvent> _parser = new pb::MessageParser<DoorEvent>(() => new DoorEvent());
-    private pb::UnknownFieldSet _unknownFields;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public static pb::MessageParser<DoorEvent> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::SzakdolgozatGRPCKliens.SzakdolgozatgreetReflection.Descriptor.MessageTypes[2]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public DoorEvent() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public DoorEvent(DoorEvent other) : this() {
-      cardID_ = other.cardID_;
-      doorID_ = other.doorID_;
-      doorName_ = other.doorName_;
-      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public DoorEvent Clone() {
-      return new DoorEvent(this);
-    }
-
-    /// <summary>Field number for the "card_ID" field.</summary>
-    public const int CardIDFieldNumber = 1;
-    private string cardID_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public string CardID {
-      get { return cardID_; }
-      set {
-        cardID_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "door_ID" field.</summary>
-    public const int DoorIDFieldNumber = 2;
-    private int doorID_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public int DoorID {
-      get { return doorID_; }
-      set {
-        doorID_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "door_name" field.</summary>
-    public const int DoorNameFieldNumber = 3;
-    private string doorName_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public string DoorName {
-      get { return doorName_; }
-      set {
-        doorName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public override bool Equals(object other) {
-      return Equals(other as DoorEvent);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public bool Equals(DoorEvent other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (CardID != other.CardID) return false;
-      if (DoorID != other.DoorID) return false;
-      if (DoorName != other.DoorName) return false;
-      return Equals(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (CardID.Length != 0) hash ^= CardID.GetHashCode();
-      if (DoorID != 0) hash ^= DoorID.GetHashCode();
-      if (DoorName.Length != 0) hash ^= DoorName.GetHashCode();
-      if (_unknownFields != null) {
-        hash ^= _unknownFields.GetHashCode();
-      }
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void WriteTo(pb::CodedOutputStream output) {
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      output.WriteRawMessage(this);
-    #else
-      if (CardID.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(CardID);
-      }
-      if (DoorID != 0) {
-        output.WriteRawTag(16);
-        output.WriteInt32(DoorID);
-      }
-      if (DoorName.Length != 0) {
-        output.WriteRawTag(26);
-        output.WriteString(DoorName);
-      }
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(output);
-      }
-    #endif
-    }
-
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (CardID.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(CardID);
-      }
-      if (DoorID != 0) {
-        output.WriteRawTag(16);
-        output.WriteInt32(DoorID);
-      }
-      if (DoorName.Length != 0) {
-        output.WriteRawTag(26);
-        output.WriteString(DoorName);
-      }
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(ref output);
-      }
-    }
-    #endif
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public int CalculateSize() {
-      int size = 0;
-      if (CardID.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(CardID);
-      }
-      if (DoorID != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(DoorID);
-      }
-      if (DoorName.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(DoorName);
-      }
-      if (_unknownFields != null) {
-        size += _unknownFields.CalculateSize();
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void MergeFrom(DoorEvent other) {
-      if (other == null) {
-        return;
-      }
-      if (other.CardID.Length != 0) {
-        CardID = other.CardID;
-      }
-      if (other.DoorID != 0) {
-        DoorID = other.DoorID;
-      }
-      if (other.DoorName.Length != 0) {
-        DoorName = other.DoorName;
-      }
-      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void MergeFrom(pb::CodedInputStream input) {
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      input.ReadRawMessage(this);
-    #else
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
-            break;
-          case 10: {
-            CardID = input.ReadString();
-            break;
-          }
-          case 16: {
-            DoorID = input.ReadInt32();
-            break;
-          }
-          case 26: {
-            DoorName = input.ReadString();
-            break;
-          }
-        }
-      }
-    #endif
-    }
-
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
-            break;
-          case 10: {
-            CardID = input.ReadString();
-            break;
-          }
-          case 16: {
-            DoorID = input.ReadInt32();
-            break;
-          }
-          case 26: {
-            DoorName = input.ReadString();
-            break;
-          }
-        }
-      }
-    }
-    #endif
-
-  }
-
   public sealed partial class DoorInformation : pb::IMessage<DoorInformation>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -668,7 +405,7 @@ namespace SzakdolgozatGRPCKliens {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::SzakdolgozatGRPCKliens.SzakdolgozatgreetReflection.Descriptor.MessageTypes[3]; }
+      get { return global::SzakdolgozatGRPCKliens.SzakdolgozatgreetReflection.Descriptor.MessageTypes[2]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -871,6 +608,241 @@ namespace SzakdolgozatGRPCKliens {
           }
           case 18: {
             DoorName = input.ReadString();
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
+  public sealed partial class DoorEvent : pb::IMessage<DoorEvent>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<DoorEvent> _parser = new pb::MessageParser<DoorEvent>(() => new DoorEvent());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<DoorEvent> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::SzakdolgozatGRPCKliens.SzakdolgozatgreetReflection.Descriptor.MessageTypes[3]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public DoorEvent() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public DoorEvent(DoorEvent other) : this() {
+      cardID_ = other.cardID_;
+      doorInfo_ = other.doorInfo_ != null ? other.doorInfo_.Clone() : null;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public DoorEvent Clone() {
+      return new DoorEvent(this);
+    }
+
+    /// <summary>Field number for the "card_ID" field.</summary>
+    public const int CardIDFieldNumber = 1;
+    private string cardID_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string CardID {
+      get { return cardID_; }
+      set {
+        cardID_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "door_info" field.</summary>
+    public const int DoorInfoFieldNumber = 2;
+    private global::SzakdolgozatGRPCKliens.DoorInformation doorInfo_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::SzakdolgozatGRPCKliens.DoorInformation DoorInfo {
+      get { return doorInfo_; }
+      set {
+        doorInfo_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as DoorEvent);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(DoorEvent other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (CardID != other.CardID) return false;
+      if (!object.Equals(DoorInfo, other.DoorInfo)) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (CardID.Length != 0) hash ^= CardID.GetHashCode();
+      if (doorInfo_ != null) hash ^= DoorInfo.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (CardID.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(CardID);
+      }
+      if (doorInfo_ != null) {
+        output.WriteRawTag(18);
+        output.WriteMessage(DoorInfo);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (CardID.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(CardID);
+      }
+      if (doorInfo_ != null) {
+        output.WriteRawTag(18);
+        output.WriteMessage(DoorInfo);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      if (CardID.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(CardID);
+      }
+      if (doorInfo_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(DoorInfo);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(DoorEvent other) {
+      if (other == null) {
+        return;
+      }
+      if (other.CardID.Length != 0) {
+        CardID = other.CardID;
+      }
+      if (other.doorInfo_ != null) {
+        if (doorInfo_ == null) {
+          DoorInfo = new global::SzakdolgozatGRPCKliens.DoorInformation();
+        }
+        DoorInfo.MergeFrom(other.DoorInfo);
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            CardID = input.ReadString();
+            break;
+          }
+          case 18: {
+            if (doorInfo_ == null) {
+              DoorInfo = new global::SzakdolgozatGRPCKliens.DoorInformation();
+            }
+            input.ReadMessage(DoorInfo);
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10: {
+            CardID = input.ReadString();
+            break;
+          }
+          case 18: {
+            if (doorInfo_ == null) {
+              DoorInfo = new global::SzakdolgozatGRPCKliens.DoorInformation();
+            }
+            input.ReadMessage(DoorInfo);
             break;
           }
         }
