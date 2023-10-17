@@ -1,0 +1,4 @@
+﻿Object reference not set to an instance of an object.,Time:2023-10-17 18:33:44
+Status(StatusCode="Unavailable", Detail="Error connecting to subchannel.", DebugException="System.Net.Sockets.SocketException: Nem hozható létre kapcsolat, mert a célszámítógép már visszautasította a kapcsolatot."),Time:2023-10-17 18:33:48
+Object reference not set to an instance of an object.,Time:2023-10-17 18:36:08
+Object reference not set to an instance of an object.,Time:2023-10-17 18:36:22

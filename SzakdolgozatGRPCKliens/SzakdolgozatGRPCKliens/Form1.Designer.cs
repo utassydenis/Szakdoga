@@ -30,12 +30,10 @@
         {
             components = new System.ComponentModel.Container();
             doorListComboBox = new ComboBox();
-            dataGridView1 = new DataGridView();
             label1 = new Label();
             enterExitComboBox = new ComboBox();
             timer1 = new System.Windows.Forms.Timer(components);
             label2 = new Label();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // doorListComboBox
@@ -46,19 +44,10 @@
             doorListComboBox.Size = new Size(196, 23);
             doorListComboBox.TabIndex = 0;
             // 
-            // dataGridView1
-            // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(424, 36);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowTemplate.Height = 25;
-            dataGridView1.Size = new Size(328, 150);
-            dataGridView1.TabIndex = 2;
-            // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(439, 234);
+            label1.Location = new Point(35, 167);
             label1.Name = "label1";
             label1.Size = new Size(38, 15);
             label1.TabIndex = 3;
@@ -81,7 +70,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(439, 347);
+            label2.Location = new Point(35, 289);
             label2.Name = "label2";
             label2.Size = new Size(38, 15);
             label2.TabIndex = 5;
@@ -91,16 +80,14 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(291, 450);
             Controls.Add(label2);
             Controls.Add(enterExitComboBox);
             Controls.Add(label1);
-            Controls.Add(dataGridView1);
             Controls.Add(doorListComboBox);
             Name = "Form1";
             Text = "Form1";
             Load += Form1_Load;
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -108,7 +95,6 @@
         #endregion
 
         private ComboBox doorListComboBox;
-        private DataGridView dataGridView1;
         private Label label1;
         private ComboBox enterExitComboBox;
         private System.Windows.Forms.Timer timer1;

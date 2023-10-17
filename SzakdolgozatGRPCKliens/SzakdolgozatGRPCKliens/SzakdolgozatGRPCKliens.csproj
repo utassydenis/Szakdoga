@@ -22,4 +22,8 @@
     <Protobuf Include="Protos\szakdolgozatgreet.proto" GrpcServices="Client" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="LogFiles\" />
+  </ItemGroup>
+
 </Project>
