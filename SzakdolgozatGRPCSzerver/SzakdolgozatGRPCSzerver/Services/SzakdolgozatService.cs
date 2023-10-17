@@ -134,7 +134,7 @@ namespace SzakdolgozatGRPCSzerver.Services
             string time = DateTime.Now.Date.ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
             MySqlCommand cmd = new MySqlCommand("SELECT COUNT(*) FROM door_logs " +
                 "WHERE card_id ='" + card_id 
-                + "', AND time_entered >'" + time + "'"
+                + "' AND time_entered >'" + time + "';"
                 ,connection);
             int result = int.Parse(cmd.ExecuteScalar() + "");
             if(result >= 1)
@@ -150,9 +150,10 @@ namespace SzakdolgozatGRPCSzerver.Services
             {
                 string time = DateTime.Now.Date.ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
                 MySqlCommand cmd = new MySqlCommand("SELECT COUNT(*) FROM door_logs " +
-                    "WHERE card_id='" + e.CardID + "', " +
+                    "WHERE card_id = '"+ e.CardID +"' " +
                     "AND door_id = 5 " +
-                    "AND time_entered >'" + time + "';");
+                    "AND time_entered > ' " + time +"';"
+                    ,connection);
                 int result = int.Parse(cmd.ExecuteScalar() + "");
                 if(result == 0)
                 {

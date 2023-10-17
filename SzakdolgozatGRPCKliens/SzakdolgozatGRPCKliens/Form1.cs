@@ -14,7 +14,7 @@ namespace SzakdolgozatGRPCKliens
 
         private SmartCardReader reader;
         private MiFareCard card;
-        string localCardID;
+        string localCardID = "";
         public Form1()
         {
             InitializeComponent();
@@ -104,7 +104,7 @@ namespace SzakdolgozatGRPCKliens
         private void timer1_Tick(object sender, EventArgs e)
         {
             label1.Text = localCardID;
-            if(localCardID != null && doorListComboBox.Text != "")
+            if(localCardID != "" && doorListComboBox.Text != "")
             {
                 if (enterExitComboBox.Text == "Enter")
                 {

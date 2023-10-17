@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2023. Okt 16. 16:19
+-- Létrehozás ideje: 2023. Okt 17. 12:56
 -- Kiszolgáló verziója: 10.4.22-MariaDB
 -- PHP verzió: 8.0.13
 
@@ -42,7 +42,7 @@ CREATE TABLE `card_user` (
 INSERT INTO `card_user` (`id`, `user_id`, `card_id`, `start_date`, `expired`) VALUES
 (1, 123, '36-B8-6F-C6', '2023-10-15 17:48:00', NULL),
 (2, 456, 'B6-C3-70-C6', '2023-10-15 18:27:01', '2028-10-27 18:26:28'),
-(3, 789, '66-9D-B2-C6', '2023-10-15 18:27:01', '2015-10-21 18:26:29');
+(3, 789, '66-9D-B2-C6', '2023-10-15 18:27:01', '2023-10-18 18:26:29');
 
 -- --------------------------------------------------------
 
@@ -64,7 +64,8 @@ INSERT INTO `doors` (`id`, `door_id`, `door_name`) VALUES
 (1, 1, 'test_door_1'),
 (2, 2, 'test_door_2'),
 (3, 3, 'test_door_3'),
-(4, 4, 'test_door_4');
+(4, 4, 'test_door_4'),
+(5, 5, 'diner_door');
 
 -- --------------------------------------------------------
 
@@ -76,7 +77,7 @@ CREATE TABLE `door_logs` (
   `id` int(11) NOT NULL,
   `door_id` int(11) NOT NULL,
   `card_id` varchar(255) NOT NULL,
-  `time_entered` timestamp NOT NULL DEFAULT current_timestamp(),
+  `time_entered` timestamp NULL DEFAULT NULL,
   `time_exited` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -90,7 +91,28 @@ INSERT INTO `door_logs` (`id`, `door_id`, `card_id`, `time_entered`, `time_exite
 (3, 1, '36-B8-6F-C6', '2023-10-16 13:59:47', '2023-10-16 13:59:52'),
 (4, 1, '36-B8-6F-C6', '2023-10-16 14:02:22', NULL),
 (5, 1, '36-B8-6F-C6', '2023-10-16 14:02:25', NULL),
-(6, 1, '36-B8-6F-C6', '2023-10-16 14:02:27', '2023-10-16 14:08:08');
+(6, 1, '36-B8-6F-C6', '2023-10-16 14:02:27', '2023-10-16 14:08:08'),
+(7, 1, '36-B8-6F-C6', '2023-10-16 16:01:12', NULL),
+(8, 1, '36-B8-6F-C6', '2023-10-16 16:03:58', NULL),
+(9, 1, '36-B8-6F-C6', '2023-10-16 19:58:24', NULL),
+(10, 1, '36-B8-6F-C6', '2023-10-16 20:21:59', NULL),
+(11, 1, '36-B8-6F-C6', NULL, '2023-10-16 20:22:14'),
+(12, 1, '36-B8-6F-C6', '2023-10-17 10:34:16', NULL),
+(13, 3, 'B6-C3-70-C6', '2023-10-17 10:34:52', NULL),
+(14, 1, '36-B8-6F-C6', '2023-10-17 10:35:03', NULL),
+(15, 1, '36-B8-6F-C6', '2023-10-17 10:36:21', NULL),
+(16, 1, '36-B8-6F-C6', '2023-10-17 10:36:53', NULL),
+(17, 1, '36-B8-6F-C6', '2023-10-17 10:37:03', NULL),
+(18, 1, '36-B8-6F-C6', '2023-10-17 10:38:08', NULL),
+(19, 1, '36-B8-6F-C6', '2023-10-17 10:38:23', NULL),
+(20, 1, '36-B8-6F-C6', '2023-10-17 10:39:34', NULL),
+(21, 1, '36-B8-6F-C6', '2023-10-17 10:39:37', NULL),
+(22, 1, '36-B8-6F-C6', '2023-10-17 10:41:10', NULL),
+(23, 5, '36-B8-6F-C6', '2023-10-17 10:41:55', NULL),
+(24, 5, '36-B8-6F-C6', '2023-10-17 10:42:05', NULL),
+(25, 5, 'B6-C3-70-C6', '2023-10-17 10:54:47', NULL),
+(26, 4, '66-9D-B2-C6', '2023-10-17 10:55:39', NULL),
+(27, 5, '66-9D-B2-C6', '2023-10-17 10:55:55', NULL);
 
 -- --------------------------------------------------------
 
@@ -112,7 +134,8 @@ INSERT INTO `door_privilige_requirement` (`id`, `door_id`, `privilige_level`) VA
 (1, 1, 1),
 (2, 2, 2),
 (3, 3, 3),
-(4, 4, 4);
+(4, 4, 4),
+(5, 5, 5);
 
 -- --------------------------------------------------------
 
@@ -133,7 +156,8 @@ INSERT INTO `privilige_levels` (`id`, `privilige_level`) VALUES
 (1, 1),
 (2, 2),
 (3, 3),
-(4, 4);
+(4, 4),
+(5, 5);
 
 -- --------------------------------------------------------
 
@@ -176,7 +200,10 @@ INSERT INTO `user_priviliges` (`id`, `user_id`, `privilige_level`) VALUES
 (2, 123, 1),
 (3, 123, 2),
 (4, 456, 3),
-(5, 789, 4);
+(5, 789, 4),
+(6, 123, 5),
+(7, 456, 5),
+(8, 789, 5);
 
 --
 -- Indexek a kiírt táblákhoz
@@ -249,25 +276,25 @@ ALTER TABLE `card_user`
 -- AUTO_INCREMENT a táblához `doors`
 --
 ALTER TABLE `doors`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT a táblához `door_logs`
 --
 ALTER TABLE `door_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT a táblához `door_privilige_requirement`
 --
 ALTER TABLE `door_privilige_requirement`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT a táblához `privilige_levels`
 --
 ALTER TABLE `privilige_levels`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT a táblához `users`
@@ -279,7 +306,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT a táblához `user_priviliges`
 --
 ALTER TABLE `user_priviliges`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Megkötések a kiírt táblákhoz
