@@ -78,22 +78,6 @@ namespace SzakdolgozatGRPCKliens {
         __Marshaller_Szakdolgozat_Empty,
         __Marshaller_Szakdolgozat_DoorInformation);
 
-    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Method<global::SzakdolgozatGRPCKliens.DoorEvent, global::SzakdolgozatGRPCKliens.Result> __Method_EnterEntrance = new grpc::Method<global::SzakdolgozatGRPCKliens.DoorEvent, global::SzakdolgozatGRPCKliens.Result>(
-        grpc::MethodType.Unary,
-        __ServiceName,
-        "EnterEntrance",
-        __Marshaller_Szakdolgozat_DoorEvent,
-        __Marshaller_Szakdolgozat_Result);
-
-    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Method<global::SzakdolgozatGRPCKliens.DoorEvent, global::SzakdolgozatGRPCKliens.Result> __Method_ExitEntrance = new grpc::Method<global::SzakdolgozatGRPCKliens.DoorEvent, global::SzakdolgozatGRPCKliens.Result>(
-        grpc::MethodType.Unary,
-        __ServiceName,
-        "ExitEntrance",
-        __Marshaller_Szakdolgozat_DoorEvent,
-        __Marshaller_Szakdolgozat_Result);
-
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
     {
@@ -176,46 +160,6 @@ namespace SzakdolgozatGRPCKliens {
       public virtual grpc::AsyncServerStreamingCall<global::SzakdolgozatGRPCKliens.DoorInformation> ListDoors(global::SzakdolgozatGRPCKliens.Empty request, grpc::CallOptions options)
       {
         return CallInvoker.AsyncServerStreamingCall(__Method_ListDoors, null, options, request);
-      }
-      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::SzakdolgozatGRPCKliens.Result EnterEntrance(global::SzakdolgozatGRPCKliens.DoorEvent request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
-      {
-        return EnterEntrance(request, new grpc::CallOptions(headers, deadline, cancellationToken));
-      }
-      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::SzakdolgozatGRPCKliens.Result EnterEntrance(global::SzakdolgozatGRPCKliens.DoorEvent request, grpc::CallOptions options)
-      {
-        return CallInvoker.BlockingUnaryCall(__Method_EnterEntrance, null, options, request);
-      }
-      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::SzakdolgozatGRPCKliens.Result> EnterEntranceAsync(global::SzakdolgozatGRPCKliens.DoorEvent request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
-      {
-        return EnterEntranceAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
-      }
-      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::SzakdolgozatGRPCKliens.Result> EnterEntranceAsync(global::SzakdolgozatGRPCKliens.DoorEvent request, grpc::CallOptions options)
-      {
-        return CallInvoker.AsyncUnaryCall(__Method_EnterEntrance, null, options, request);
-      }
-      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::SzakdolgozatGRPCKliens.Result ExitEntrance(global::SzakdolgozatGRPCKliens.DoorEvent request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
-      {
-        return ExitEntrance(request, new grpc::CallOptions(headers, deadline, cancellationToken));
-      }
-      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::SzakdolgozatGRPCKliens.Result ExitEntrance(global::SzakdolgozatGRPCKliens.DoorEvent request, grpc::CallOptions options)
-      {
-        return CallInvoker.BlockingUnaryCall(__Method_ExitEntrance, null, options, request);
-      }
-      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::SzakdolgozatGRPCKliens.Result> ExitEntranceAsync(global::SzakdolgozatGRPCKliens.DoorEvent request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
-      {
-        return ExitEntranceAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
-      }
-      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::SzakdolgozatGRPCKliens.Result> ExitEntranceAsync(global::SzakdolgozatGRPCKliens.DoorEvent request, grpc::CallOptions options)
-      {
-        return CallInvoker.AsyncUnaryCall(__Method_ExitEntrance, null, options, request);
       }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]

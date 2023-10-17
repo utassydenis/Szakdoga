@@ -1,11 +1,17 @@
 using Grpc.Core;
 using MySql.Data.MySqlClient;
+using System.Runtime.InteropServices;
 
 namespace SzakdolgozatGRPCSzerver.Services
 {
 
     public class SzakdolgozatService : SzakdolgozatGreeter.SzakdolgozatGreeterBase
     {
+        private readonly ILogger<SzakdolgozatService> _logger;
+        public SzakdolgozatService(ILogger<SzakdolgozatService> logger)
+        {
+            _logger = logger;
+        }
         MySqlConnection connection = new MySqlConnection("SERVER=localhost;DATABASE=SzakdolgozatDatabase;UID=root;PASSWORD= ;");
 
         public Task<Result> CheckDoorUsagePrerequisites(DoorEvent doorEvent)
@@ -28,7 +34,6 @@ namespace SzakdolgozatGRPCSzerver.Services
             }
             return Task.FromResult(new Result { Message = "OK!" });
         }
-
         public override Task<Result> Enter(DoorEvent doorEvent, ServerCallContext context)
         {
             if (!OpenConnection())
@@ -54,7 +59,6 @@ namespace SzakdolgozatGRPCSzerver.Services
                 return testResult;
             }
         }
-
         public override Task<Result> Exit(DoorEvent doorEvent, ServerCallContext context)
         {
             if (!OpenConnection())
@@ -79,7 +83,6 @@ namespace SzakdolgozatGRPCSzerver.Services
                 return testResult;
             }
         }
-
         public override async Task ListDoors(Empty e, IServerStreamWriter<DoorInformation> responseStream, ServerCallContext context)
         {
             if (OpenConnection())
@@ -96,7 +99,13 @@ namespace SzakdolgozatGRPCSzerver.Services
                 }
 
             }
-            //Kezelni ha nincs connection
+            else
+            {
+                DoorInformation errorDoor = new DoorInformation();
+                errorDoor.DoorID = 00;
+                errorDoor.DoorName = "Failed to establish connection to databas.e";
+                await responseStream.WriteAsync(errorDoor);
+            }
         }
         public string getEventTimeLog()
         {
@@ -172,7 +181,7 @@ namespace SzakdolgozatGRPCSzerver.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error: " + ex.Message);
+                _logger.LogError(ex.Message);
             }
             return false;
         }
@@ -185,7 +194,7 @@ namespace SzakdolgozatGRPCSzerver.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error: " + ex.Message);
+                _logger.LogError(ex.Message);
             }
             return false;
         }

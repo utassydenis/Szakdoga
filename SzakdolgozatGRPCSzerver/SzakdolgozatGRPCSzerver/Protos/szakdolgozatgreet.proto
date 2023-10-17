@@ -9,9 +9,6 @@ service SzakdolgozatGreeter {
 	rpc Exit(DoorEvent) returns (Result);
 
 	rpc ListDoors(Empty) returns (stream DoorInformation);
-
-	rpc EnterEntrance(DoorEvent) returns (Result);
-	rpc ExitEntrance(DoorEvent) returns (Result);
 }
 
 message Empty{
