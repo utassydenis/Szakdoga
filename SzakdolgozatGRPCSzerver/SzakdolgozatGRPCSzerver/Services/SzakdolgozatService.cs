@@ -1,5 +1,7 @@
 using Grpc.Core;
+using Microsoft.AspNetCore.Rewrite;
 using MySql.Data.MySqlClient;
+using MySqlX.XDevAPI.Relational;
 using System.Runtime.InteropServices;
 
 namespace SzakdolgozatGRPCSzerver.Services
@@ -7,13 +9,14 @@ namespace SzakdolgozatGRPCSzerver.Services
 
     public class SzakdolgozatService : SzakdolgozatGreeter.SzakdolgozatGreeterBase
     {
+        #region Logger
         private readonly ILogger<SzakdolgozatService> _logger;
         public SzakdolgozatService(ILogger<SzakdolgozatService> logger)
         {
             _logger = logger;
         }
+        #endregion
         MySqlConnection connection = new MySqlConnection("SERVER=localhost;DATABASE=SzakdolgozatDatabase;UID=root;PASSWORD= ;");
-
         public Task<Result> CheckDoorUsagePrerequisites(DoorEvent doorEvent)
         {
 
@@ -83,6 +86,31 @@ namespace SzakdolgozatGRPCSzerver.Services
                 return testResult;
             }
         }
+        public override Task<Result> EnterExit(DoorEvent doorEvent, ServerCallContext context)
+        {
+            if (!OpenConnection())
+            {
+                return Task.FromResult(new Result { Message = "Failed to connect to database." });
+            }
+            Task<Result> testResult = CheckDoorUsagePrerequisites(doorEvent);
+            string nextActivity = CheckUserLastActivityAtDoor(doorEvent);
+            if (testResult.Result.Message == "OK!")
+            {
+                MySqlCommand cmd = new MySqlCommand("INSERT INTO door_logs(door_id,card_id," + nextActivity + ")" +
+                    "VALUES('" + doorEvent.DoorInfo.DoorID + "','" 
+                    + doorEvent.CardID + "','"
+                    + getEventTimeLog() + "');"
+                    ,connection);
+                cmd.ExecuteNonQuery();
+                CloseConnection();
+                return testResult;
+            }
+            else
+            {
+                CloseConnection();
+                return testResult;
+            }
+        }
         public override async Task ListDoors(Empty e, IServerStreamWriter<DoorInformation> responseStream, ServerCallContext context)
         {
             if (OpenConnection())
@@ -107,9 +135,15 @@ namespace SzakdolgozatGRPCSzerver.Services
                 await responseStream.WriteAsync(errorDoor);
             }
         }
+
+        #region Helper Methods
         public string getEventTimeLog()
         {
             return DateTime.Now.ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
+        }
+        public string getTodayDate()
+        {
+            return DateTime.Now.Date.ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
         }
         public bool CheckDatabaseResult(MySqlCommand m)
         {
@@ -140,10 +174,10 @@ namespace SzakdolgozatGRPCSzerver.Services
         }
         public bool CheckIfUserHasEntered(string card_id)
         {
-            string time = DateTime.Now.Date.ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
+            //string time = getTodayDate();
             MySqlCommand cmd = new MySqlCommand("SELECT COUNT(*) FROM door_logs " +
                 "WHERE card_id ='" + card_id 
-                + "' AND time_entered >'" + time + "';"
+                + "' AND time_entered >'" + getTodayDate() + "';"
                 ,connection);
             int result = int.Parse(cmd.ExecuteScalar() + "");
             if(result >= 1)
@@ -151,7 +185,22 @@ namespace SzakdolgozatGRPCSzerver.Services
                 return true;
             }
             return false;
-
+        }
+        public string CheckUserLastActivityAtDoor(DoorEvent doorEvent)
+        {
+            MySqlCommand cmd = new MySqlCommand("SELECT time_entered FROM door_logs " +
+                "WHERE card_id = '"+doorEvent.CardID+ "'" +
+                "AND door_id= '"+doorEvent.DoorInfo.DoorID+"' " +
+                "ORDER BY ID DESC LIMIT 1; "
+                , connection);
+            var result = cmd.ExecuteScalar();
+            Console.WriteLine(result);
+            if (result == null || result.ToString() == "")
+            {
+                return "time_entered";
+            }
+             
+            return "time_exited";
         }
         public bool CheckIfUserCanDine(DoorEvent e)
         {
@@ -198,5 +247,6 @@ namespace SzakdolgozatGRPCSzerver.Services
             }
             return false;
         }
+        #endregion
     }
 }

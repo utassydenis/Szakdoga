@@ -105,7 +105,6 @@ namespace SzakdolgozatGRPCKliens
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
-            label1.Text = localCardID;
             if (localCardID != "" && doorListComboBox.Text != "")
             {
                 if (enterExitComboBox.Text == "Enter")
@@ -116,6 +115,11 @@ namespace SzakdolgozatGRPCKliens
                 else if (enterExitComboBox.Text == "Exit")
                 {
                     ExitDoor();
+                    localCardID = "";
+                }
+                else if (enterExitComboBox.Text == "Enter/Exit")
+                {
+                    EnterExitDoor();
                     localCardID = "";
                 }
             }
@@ -145,6 +149,18 @@ namespace SzakdolgozatGRPCKliens
             try
             {
                 Result res = client.Exit(SetupDoorEvent());
+                label2.Text = res.ToString();
+            }
+            catch (RpcException ex)
+            {
+                File.AppendAllText(logFilePath, ex.Message + ",Time:" + DateTime.Now.ToString("yyyy'-'MM'-'dd HH':'mm':'ss") + "\n", Encoding.UTF8);
+            }
+        }
+        private void EnterExitDoor()
+        {
+            try
+            {
+                Result res = client.EnterExit(SetupDoorEvent());
                 label2.Text = res.ToString();
             }
             catch (RpcException ex)

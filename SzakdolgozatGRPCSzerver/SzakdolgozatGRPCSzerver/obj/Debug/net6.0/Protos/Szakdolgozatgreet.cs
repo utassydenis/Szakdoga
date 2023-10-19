@@ -28,13 +28,14 @@ namespace SzakdolgozatGRPCSzerver {
             "dCIHCgVFbXB0eSIZCgZSZXN1bHQSDwoHbWVzc2FnZRgBIAEoCSI1Cg9Eb29y",
             "SW5mb3JtYXRpb24SDwoHZG9vcl9JRBgBIAEoBRIRCglkb29yX25hbWUYAiAB",
             "KAkiTgoJRG9vckV2ZW50Eg8KB2NhcmRfSUQYASABKAkSMAoJZG9vcl9pbmZv",
-            "GAIgASgLMh0uU3pha2RvbGdvemF0LkRvb3JJbmZvcm1hdGlvbjLHAQoTU3ph",
+            "GAIgASgLMh0uU3pha2RvbGdvemF0LkRvb3JJbmZvcm1hdGlvbjKDAgoTU3ph",
             "a2RvbGdvemF0R3JlZXRlchI2CgVFbnRlchIXLlN6YWtkb2xnb3phdC5Eb29y",
             "RXZlbnQaFC5TemFrZG9sZ296YXQuUmVzdWx0EjUKBEV4aXQSFy5TemFrZG9s",
-            "Z296YXQuRG9vckV2ZW50GhQuU3pha2RvbGdvemF0LlJlc3VsdBJBCglMaXN0",
-            "RG9vcnMSEy5TemFrZG9sZ296YXQuRW1wdHkaHS5TemFrZG9sZ296YXQuRG9v",
-            "ckluZm9ybWF0aW9uMAFCGqoCF1N6YWtkb2xnb3phdEdSUENTemVydmVyYgZw",
-            "cm90bzM="));
+            "Z296YXQuRG9vckV2ZW50GhQuU3pha2RvbGdvemF0LlJlc3VsdBI6CglFbnRl",
+            "ckV4aXQSFy5TemFrZG9sZ296YXQuRG9vckV2ZW50GhQuU3pha2RvbGdvemF0",
+            "LlJlc3VsdBJBCglMaXN0RG9vcnMSEy5TemFrZG9sZ296YXQuRW1wdHkaHS5T",
+            "emFrZG9sZ296YXQuRG9vckluZm9ybWF0aW9uMAFCGqoCF1N6YWtkb2xnb3ph",
+            "dEdSUENTemVydmVyYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {

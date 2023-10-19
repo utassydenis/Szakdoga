@@ -71,6 +71,14 @@ namespace SzakdolgozatGRPCSzerver {
         __Marshaller_Szakdolgozat_Result);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::SzakdolgozatGRPCSzerver.DoorEvent, global::SzakdolgozatGRPCSzerver.Result> __Method_EnterExit = new grpc::Method<global::SzakdolgozatGRPCSzerver.DoorEvent, global::SzakdolgozatGRPCSzerver.Result>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "EnterExit",
+        __Marshaller_Szakdolgozat_DoorEvent,
+        __Marshaller_Szakdolgozat_Result);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::SzakdolgozatGRPCSzerver.Empty, global::SzakdolgozatGRPCSzerver.DoorInformation> __Method_ListDoors = new grpc::Method<global::SzakdolgozatGRPCSzerver.Empty, global::SzakdolgozatGRPCSzerver.DoorInformation>(
         grpc::MethodType.ServerStreaming,
         __ServiceName,
@@ -101,6 +109,12 @@ namespace SzakdolgozatGRPCSzerver {
       }
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::SzakdolgozatGRPCSzerver.Result> EnterExit(global::SzakdolgozatGRPCSzerver.DoorEvent request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task ListDoors(global::SzakdolgozatGRPCSzerver.Empty request, grpc::IServerStreamWriter<global::SzakdolgozatGRPCSzerver.DoorInformation> responseStream, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
@@ -116,6 +130,7 @@ namespace SzakdolgozatGRPCSzerver {
       return grpc::ServerServiceDefinition.CreateBuilder()
           .AddMethod(__Method_Enter, serviceImpl.Enter)
           .AddMethod(__Method_Exit, serviceImpl.Exit)
+          .AddMethod(__Method_EnterExit, serviceImpl.EnterExit)
           .AddMethod(__Method_ListDoors, serviceImpl.ListDoors).Build();
     }
 
@@ -128,6 +143,7 @@ namespace SzakdolgozatGRPCSzerver {
     {
       serviceBinder.AddMethod(__Method_Enter, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::SzakdolgozatGRPCSzerver.DoorEvent, global::SzakdolgozatGRPCSzerver.Result>(serviceImpl.Enter));
       serviceBinder.AddMethod(__Method_Exit, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::SzakdolgozatGRPCSzerver.DoorEvent, global::SzakdolgozatGRPCSzerver.Result>(serviceImpl.Exit));
+      serviceBinder.AddMethod(__Method_EnterExit, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::SzakdolgozatGRPCSzerver.DoorEvent, global::SzakdolgozatGRPCSzerver.Result>(serviceImpl.EnterExit));
       serviceBinder.AddMethod(__Method_ListDoors, serviceImpl == null ? null : new grpc::ServerStreamingServerMethod<global::SzakdolgozatGRPCSzerver.Empty, global::SzakdolgozatGRPCSzerver.DoorInformation>(serviceImpl.ListDoors));
     }
 

@@ -56,7 +56,7 @@
             // enterExitComboBox
             // 
             enterExitComboBox.FormattingEnabled = true;
-            enterExitComboBox.Items.AddRange(new object[] { "Enter", "Exit" });
+            enterExitComboBox.Items.AddRange(new object[] { "Enter", "Exit", "Enter/Exit" });
             enterExitComboBox.Location = new Point(35, 79);
             enterExitComboBox.Name = "enterExitComboBox";
             enterExitComboBox.Size = new Size(196, 23);

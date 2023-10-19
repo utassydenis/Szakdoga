@@ -7,6 +7,7 @@ package Szakdolgozat;
 service SzakdolgozatGreeter {
 	rpc Enter(DoorEvent) returns (Result);
 	rpc Exit(DoorEvent) returns (Result);
+	rpc EnterExit(DoorEvent) returns (Result);
 
 	rpc ListDoors(Empty) returns (stream DoorInformation);
 }
