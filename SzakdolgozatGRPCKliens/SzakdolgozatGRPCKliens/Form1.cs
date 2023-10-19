@@ -13,7 +13,7 @@ namespace SzakdolgozatGRPCKliens
     {
         GrpcChannel channel = GrpcChannel.ForAddress("https://localhost:7165");
         SzakdolgozatGreeter.SzakdolgozatGreeterClient client;
-        string logFilePath = "C:\\Users\\utass\\Desktop\\Szakdoga\\SzakdolgozatGRPCKliens\\SzakdolgozatGRPCKliens\\LogFiles\\logFiles.txt";
+        string logFilePath = "..\\..\\..\\LogFiles\\logFiles.txt";
         private SmartCardReader reader;
         private MiFareCard card;
         string localCardID = "";
@@ -27,7 +27,7 @@ namespace SzakdolgozatGRPCKliens
         private async void Form1_Load(object sender, EventArgs e)
         {
             client = new SzakdolgozatGreeter.SzakdolgozatGreeterClient(channel);
-            Bitmap image = new Bitmap("C:\\Users\\utass\\Desktop\\Szakdoga\\SzakdolgozatGRPCKliens\\SzakdolgozatGRPCKliens\\Pictures\\ACS-ACR1255U-J1-Front.jpg");
+            Bitmap image = new Bitmap("..\\..\\..\\Pictures\\ACS-ACR1255U-J1-Front.jpg");
             scannerPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             scannerPictureBox.Image = (Image)image;
             try
@@ -47,6 +47,7 @@ namespace SzakdolgozatGRPCKliens
                 File.AppendAllText(logFilePath, ex.Message + ",Time:" + DateTime.Now.ToString("yyyy'-'MM'-'dd HH':'mm':'ss") + "\n", Encoding.UTF8);
             }
         }
+        #region Reader and card handling
         private async void GetDevices()
         {
             try
@@ -105,6 +106,7 @@ namespace SzakdolgozatGRPCKliens
                 File.AppendAllText(logFilePath, e.Message + ",Time:" + DateTime.Now.ToString("yyyy'-'MM'-'dd HH':'mm':'ss") + "\n", Encoding.UTF8);
             }
         }
+        #endregion
         private void timer1_Tick(object sender, EventArgs e)
         {
             if (reader == null)
@@ -132,10 +134,13 @@ namespace SzakdolgozatGRPCKliens
         }
         private DoorEvent SetupDoorEvent()
         {
-            DoorInformation tmp = doors.Find(x => x.DoorName == doorListComboBox.SelectedItem.ToString());
+            CardInformation tmpCardInformation = new CardInformation();
+            tmpCardInformation.CardID = localCardID;
+            DoorInformation tmpDoorInformation = doors.Find(x => x.DoorName == doorListComboBox.SelectedItem.ToString());
+
             DoorEvent tmpEvent = new DoorEvent();
-            tmpEvent.CardID = localCardID;
-            tmpEvent.DoorInfo = tmp;
+            tmpEvent.CardID = tmpCardInformation;
+            tmpEvent.DoorInfo = tmpDoorInformation;
             return tmpEvent;
         }
         private void EnterDoor()

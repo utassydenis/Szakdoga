@@ -20,29 +20,29 @@ namespace SzakdolgozatGRPCSzerver.Services
         public Task<Result> CheckDoorUsagePrerequisites(DoorEvent doorEvent)
         {
             string message = "OK!";
-            if (!CheckCardValidity(doorEvent.CardID))
+            if (!CheckCardValidity(doorEvent.CardInformation.CardID))
             {
-                message = "Card:" + doorEvent.CardID +" is invalid!";
+                message = "Card:" + doorEvent.CardInformation.CardID +" is invalid!";
                 insertErrorIntoDatabase(doorEvent, message);
                 return Task.FromResult(new Result { Message = message });
             }
             if (!CheckIfUserHasAccessToDoor(doorEvent))
             {
-                message = ("Card:" + doorEvent.CardID + " does not have access to " + doorEvent.DoorInfo.DoorName);
+                message = ("Card:" + doorEvent.CardInformation.CardID + " does not have access to " + doorEvent.DoorInfo.DoorName);
                 insertErrorIntoDatabase(doorEvent, message);
                 return Task.FromResult(new Result { Message = message });
             }
             if(doorEvent.DoorInfo.DoorID == 5)
             {
-                if (CheckIfUserHasEntered(doorEvent.CardID))
+                if (CheckIfUserHasEntered(doorEvent.CardInformation.CardID))
                 {
-                    message = "Card:" + doorEvent.CardID + " was not used to enter.";
+                    message = "Card:" + doorEvent.CardInformation.CardID + " was not used to enter.";
                     insertErrorIntoDatabase(doorEvent, message);
                     return Task.FromResult(new Result { Message = message });
                 }
                 if (!CheckIfUserCanDine(doorEvent))
                 {
-                    message = "Card:" + doorEvent.CardID + "was already used today.";
+                    message = "Card:" + doorEvent.CardInformation.CardID + "was already used today.";
                     insertErrorIntoDatabase(doorEvent, message);
                     return Task.FromResult(new Result { Message = message });
                 }    
@@ -61,12 +61,12 @@ namespace SzakdolgozatGRPCSzerver.Services
             {
                 MySqlCommand cmd = new MySqlCommand("INSERT INTO door_logs(door_id,card_id,time_entered) "
                 + "VALUES('" + doorEvent.DoorInfo.DoorID + "','"
-                + doorEvent.CardID + "','"
+                + doorEvent.CardInformation.CardID + "','"
                 + getEventTimeLog() + "');"
                 , connection);
                 cmd.ExecuteNonQuery();
                 CloseConnection();
-                return Task.FromResult(new Result { Message = "Card:" + doorEvent.CardID + " was used to enter." });
+                return Task.FromResult(new Result { Message = "Card:" + doorEvent.CardInformation.CardID + " was used to enter." });
             }
             else
             {
@@ -85,12 +85,12 @@ namespace SzakdolgozatGRPCSzerver.Services
             {
                 MySqlCommand cmd = new MySqlCommand("INSERT INTO door_logs(door_id,card_id,time_exited) "
                     + "VALUES('" + doorEvent.DoorInfo.DoorID + "','"
-                    + doorEvent.CardID + "','"
+                    + doorEvent.CardInformation.CardID + "','"
                     + getEventTimeLog() + "');"
                     , connection);
                 cmd.ExecuteNonQuery();
                 CloseConnection();
-                return Task.FromResult(new Result { Message = "Card:" + doorEvent.CardID + " was used to exit." });
+                return Task.FromResult(new Result { Message = "Card:" + doorEvent.CardInformation.CardID + " was used to exit." });
             }
             else
             {
@@ -164,7 +164,7 @@ namespace SzakdolgozatGRPCSzerver.Services
                 "INNER JOIN user_priviliges ON door_privilige_requirement.privilige_level = user_priviliges.privilige_level " +
                 "INNER JOIN card_user ON card_user.user_id = user_priviliges.user_id " +
                 "WHERE door_privilige_requirement.door_id = '" + e.DoorInfo.DoorID + "'" +
-                "AND card_user.card_id = '" + e.CardID + "';", connection);
+                "AND card_user.card_id = '" + e.CardInformation.CardID + "';", connection);
             return CheckDatabaseResult(cmd);
         }
         public bool CheckIfUserHasEntered(string card_id)
@@ -183,7 +183,7 @@ namespace SzakdolgozatGRPCSzerver.Services
         public Task<Result> CheckUserLastActivityAtDoor(DoorEvent doorEvent,ServerCallContext context)
         {
             MySqlCommand cmd = new MySqlCommand("SELECT time_entered FROM door_logs " +
-                "WHERE card_id = '"+doorEvent.CardID+ "'" +
+                "WHERE card_id = '"+doorEvent.CardInformation.CardID+ "'" +
                 "AND door_id= '"+doorEvent.DoorInfo.DoorID+"' " +
                 "ORDER BY ID DESC LIMIT 1; "
                 , connection);
@@ -199,7 +199,7 @@ namespace SzakdolgozatGRPCSzerver.Services
         {
             string time = DateTime.Now.Date.ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
             MySqlCommand cmd = new MySqlCommand("SELECT COUNT(*) FROM door_logs " +
-                "WHERE card_id = '"+ e.CardID +"' " +
+                "WHERE card_id = '"+ e.CardInformation.CardID +"' " +
                 "AND door_id = 5 " +
                 "AND time_entered > ' " + time +"';"
                 ,connection);
@@ -213,7 +213,7 @@ namespace SzakdolgozatGRPCSzerver.Services
         public void insertErrorIntoDatabase(DoorEvent doorEvent,string message)
         {
         MySqlCommand cmd = new MySqlCommand("INSERT INTO card_error_logs (card_id,door_id,error_reason,error_log_time)" 
-            + "VALUES('" +doorEvent.CardID +"','"
+            + "VALUES('" +doorEvent.CardInformation.CardID +"','"
             + doorEvent.DoorInfo.DoorID  + "','"
             + message +"','" 
             + getEventTimeLog() + "');"

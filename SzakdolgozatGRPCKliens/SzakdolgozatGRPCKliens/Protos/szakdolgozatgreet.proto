@@ -18,11 +18,14 @@ message Empty{
 message Result{
 	string message = 1;
 }
+message CardInformation{
+	string card_ID = 1;
+}
 message DoorInformation{
 	int32 door_ID = 1;
 	string door_name = 2;
 }
 message DoorEvent{
-	string card_ID = 1;
+	CardInformation card_ID = 1;
 	DoorInformation door_info = 2;
 }
