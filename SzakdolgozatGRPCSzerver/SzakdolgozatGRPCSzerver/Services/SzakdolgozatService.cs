@@ -19,20 +19,26 @@ namespace SzakdolgozatGRPCSzerver.Services
         MySqlConnection connection = new MySqlConnection("SERVER=localhost;DATABASE=SzakdolgozatDatabase;UID=root;PASSWORD= ;");
         public Task<Result> CheckDoorUsagePrerequisites(DoorEvent doorEvent)
         {
-
+            string message = "OK!";
             if (!CheckCardValidity(doorEvent.CardID))
             {
-                return Task.FromResult(new Result { Message = "Invalid card!" });
+                message = "Invalid card!";
+                insertErrorIntoDatabase(doorEvent, message);
+                return Task.FromResult(new Result { Message = message });
             }
             if (!CheckIfUserHasAccessToDoor(doorEvent))
             {
-                return Task.FromResult(new Result { Message = "This user doesn't have access to this door!" });
+                message = "This user does not have access to this door!";
+                insertErrorIntoDatabase(doorEvent, message);
+                return Task.FromResult(new Result { Message = message });
             }
             if(doorEvent.DoorInfo.DoorID == 5)
             {
                 if (!CheckIfUserCanDine(doorEvent))
                 {
-                    return Task.FromResult(new Result { Message = "This user has already dined today or hasn't properly entered the building" });
+                    message = "This user has already dined today or hasn't properly entered the building";
+                    insertErrorIntoDatabase(doorEvent, message);
+                    return Task.FromResult(new Result { Message = message });
                 }
             }
             return Task.FromResult(new Result { Message = "OK!" });
@@ -131,7 +137,7 @@ namespace SzakdolgozatGRPCSzerver.Services
             {
                 DoorInformation errorDoor = new DoorInformation();
                 errorDoor.DoorID = 00;
-                errorDoor.DoorName = "Failed to establish connection to databas.e";
+                errorDoor.DoorName = "Failed to establish connection to database.";
                 await responseStream.WriteAsync(errorDoor);
             }
         }
@@ -220,6 +226,16 @@ namespace SzakdolgozatGRPCSzerver.Services
             }
             return false;
             
+        }
+        public void insertErrorIntoDatabase(DoorEvent doorEvent,string message)
+        {
+        MySqlCommand cmd = new MySqlCommand("INSERT INTO card_error_logs (card_id,door_id,error_reason,error_log_time)" 
+            + "VALUES('" +doorEvent.CardID +"','"
+            + doorEvent.DoorInfo.DoorID  + "','"
+            + message +"','" 
+            + getEventTimeLog() + "');"
+            ,connection);
+            cmd.ExecuteNonQuery();
         }
         public bool OpenConnection()
         {
