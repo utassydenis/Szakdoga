@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <Folder Include="LogFiles\" />
+    <Folder Include="Pictures\" />
   </ItemGroup>
 
 </Project>

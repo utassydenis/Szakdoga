@@ -22,24 +22,30 @@ namespace SzakdolgozatGRPCSzerver.Services
             string message = "OK!";
             if (!CheckCardValidity(doorEvent.CardID))
             {
-                message = "Invalid card!";
+                message = "Card:" + doorEvent.CardID +" is invalid!";
                 insertErrorIntoDatabase(doorEvent, message);
                 return Task.FromResult(new Result { Message = message });
             }
             if (!CheckIfUserHasAccessToDoor(doorEvent))
             {
-                message = "This user does not have access to this door!";
+                message = ("Card:" + doorEvent.CardID + " does not have access to " + doorEvent.DoorInfo.DoorName);
                 insertErrorIntoDatabase(doorEvent, message);
                 return Task.FromResult(new Result { Message = message });
             }
             if(doorEvent.DoorInfo.DoorID == 5)
             {
-                if (!CheckIfUserCanDine(doorEvent))
+                if (CheckIfUserHasEntered(doorEvent.CardID))
                 {
-                    message = "This user has already dined today or hasn't properly entered the building";
+                    message = "Card:" + doorEvent.CardID + " was not used to enter.";
                     insertErrorIntoDatabase(doorEvent, message);
                     return Task.FromResult(new Result { Message = message });
                 }
+                if (!CheckIfUserCanDine(doorEvent))
+                {
+                    message = "Card:" + doorEvent.CardID + "was already used today.";
+                    insertErrorIntoDatabase(doorEvent, message);
+                    return Task.FromResult(new Result { Message = message });
+                }    
             }
             return Task.FromResult(new Result { Message = "OK!" });
         }
@@ -60,7 +66,7 @@ namespace SzakdolgozatGRPCSzerver.Services
                 , connection);
                 cmd.ExecuteNonQuery();
                 CloseConnection();
-                return testResult;
+                return Task.FromResult(new Result { Message = "Card:" + doorEvent.CardID + " was used to enter." });
             }
             else
             {
@@ -84,7 +90,7 @@ namespace SzakdolgozatGRPCSzerver.Services
                     , connection);
                 cmd.ExecuteNonQuery();
                 CloseConnection();
-                return testResult;
+                return Task.FromResult(new Result { Message = "Card:" + doorEvent.CardID + " was used to exit." });
             }
             else
             {
@@ -98,24 +104,7 @@ namespace SzakdolgozatGRPCSzerver.Services
             {
                 return Task.FromResult(new Result { Message = "Failed to connect to database." });
             }
-            Task<Result> testResult = CheckDoorUsagePrerequisites(doorEvent);
-            string nextActivity = CheckUserLastActivityAtDoor(doorEvent);
-            if (testResult.Result.Message == "OK!")
-            {
-                MySqlCommand cmd = new MySqlCommand("INSERT INTO door_logs(door_id,card_id," + nextActivity + ")" +
-                    "VALUES('" + doorEvent.DoorInfo.DoorID + "','" 
-                    + doorEvent.CardID + "','"
-                    + getEventTimeLog() + "');"
-                    ,connection);
-                cmd.ExecuteNonQuery();
-                CloseConnection();
-                return testResult;
-            }
-            else
-            {
-                CloseConnection();
-                return testResult;
-            }
+            return CheckUserLastActivityAtDoor(doorEvent, context);
         }
         public override async Task ListDoors(Empty e, IServerStreamWriter<DoorInformation> responseStream, ServerCallContext context)
         {
@@ -180,7 +169,6 @@ namespace SzakdolgozatGRPCSzerver.Services
         }
         public bool CheckIfUserHasEntered(string card_id)
         {
-            //string time = getTodayDate();
             MySqlCommand cmd = new MySqlCommand("SELECT COUNT(*) FROM door_logs " +
                 "WHERE card_id ='" + card_id 
                 + "' AND time_entered >'" + getTodayDate() + "';"
@@ -192,7 +180,7 @@ namespace SzakdolgozatGRPCSzerver.Services
             }
             return false;
         }
-        public string CheckUserLastActivityAtDoor(DoorEvent doorEvent)
+        public Task<Result> CheckUserLastActivityAtDoor(DoorEvent doorEvent,ServerCallContext context)
         {
             MySqlCommand cmd = new MySqlCommand("SELECT time_entered FROM door_logs " +
                 "WHERE card_id = '"+doorEvent.CardID+ "'" +
@@ -200,32 +188,27 @@ namespace SzakdolgozatGRPCSzerver.Services
                 "ORDER BY ID DESC LIMIT 1; "
                 , connection);
             var result = cmd.ExecuteScalar();
-            Console.WriteLine(result);
+            CloseConnection();
             if (result == null || result.ToString() == "")
             {
-                return "time_entered";
+                return Enter(doorEvent, context);
             }
-             
-            return "time_exited";
+             return Exit(doorEvent, context);
         }
         public bool CheckIfUserCanDine(DoorEvent e)
         {
-            if (CheckIfUserHasEntered(e.CardID))
+            string time = DateTime.Now.Date.ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
+            MySqlCommand cmd = new MySqlCommand("SELECT COUNT(*) FROM door_logs " +
+                "WHERE card_id = '"+ e.CardID +"' " +
+                "AND door_id = 5 " +
+                "AND time_entered > ' " + time +"';"
+                ,connection);
+            int result = int.Parse(cmd.ExecuteScalar() + "");
+            if(result == 0)
             {
-                string time = DateTime.Now.Date.ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
-                MySqlCommand cmd = new MySqlCommand("SELECT COUNT(*) FROM door_logs " +
-                    "WHERE card_id = '"+ e.CardID +"' " +
-                    "AND door_id = 5 " +
-                    "AND time_entered > ' " + time +"';"
-                    ,connection);
-                int result = int.Parse(cmd.ExecuteScalar() + "");
-                if(result == 0)
-                {
-                    return true;
-                }
+                return true;
             }
-            return false;
-            
+            return false;      
         }
         public void insertErrorIntoDatabase(DoorEvent doorEvent,string message)
         {

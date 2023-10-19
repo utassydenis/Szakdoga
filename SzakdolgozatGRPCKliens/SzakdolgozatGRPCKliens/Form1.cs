@@ -27,6 +27,9 @@ namespace SzakdolgozatGRPCKliens
         private async void Form1_Load(object sender, EventArgs e)
         {
             client = new SzakdolgozatGreeter.SzakdolgozatGreeterClient(channel);
+            Bitmap image = new Bitmap("C:\\Users\\utass\\Desktop\\Szakdoga\\SzakdolgozatGRPCKliens\\SzakdolgozatGRPCKliens\\Pictures\\ACS-ACR1255U-J1-Front.jpg");
+            scannerPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+            scannerPictureBox.Image = (Image)image;
             try
             {
                 using (var call = client.ListDoors(new Empty { }))
@@ -44,7 +47,6 @@ namespace SzakdolgozatGRPCKliens
                 File.AppendAllText(logFilePath, ex.Message + ",Time:" + DateTime.Now.ToString("yyyy'-'MM'-'dd HH':'mm':'ss") + "\n", Encoding.UTF8);
             }
         }
-
         private async void GetDevices()
         {
             try
@@ -52,7 +54,7 @@ namespace SzakdolgozatGRPCKliens
                 reader = await CardReader.FindAsync();
                 if (reader == null)
                 {
-                    label1.Text = "No Readers Found";
+                    ClientDisplayLabel.Text = "No Readers Found";
                     return;
                 }
 
@@ -105,6 +107,10 @@ namespace SzakdolgozatGRPCKliens
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
+            if (reader == null)
+            {
+                GetDevices();
+            }
             if (localCardID != "" && doorListComboBox.Text != "")
             {
                 if (enterExitComboBox.Text == "Enter")
@@ -137,7 +143,7 @@ namespace SzakdolgozatGRPCKliens
             try
             {
                 Result res = client.Enter(SetupDoorEvent());
-                label2.Text = res.ToString();
+                ClientDisplayLabel.Text = res.Message.ToString();
             }
             catch (RpcException ex)
             {
@@ -149,7 +155,7 @@ namespace SzakdolgozatGRPCKliens
             try
             {
                 Result res = client.Exit(SetupDoorEvent());
-                label2.Text = res.ToString();
+                ClientDisplayLabel.Text = res.Message.ToString();
             }
             catch (RpcException ex)
             {
@@ -161,7 +167,7 @@ namespace SzakdolgozatGRPCKliens
             try
             {
                 Result res = client.EnterExit(SetupDoorEvent());
-                label2.Text = res.ToString();
+                ClientDisplayLabel.Text = res.Message.ToString();
             }
             catch (RpcException ex)
             {

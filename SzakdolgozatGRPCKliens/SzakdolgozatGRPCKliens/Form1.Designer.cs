@@ -30,36 +30,28 @@
         {
             components = new System.ComponentModel.Container();
             doorListComboBox = new ComboBox();
-            label1 = new Label();
             enterExitComboBox = new ComboBox();
             timer1 = new System.Windows.Forms.Timer(components);
-            label2 = new Label();
+            ClientDisplayLabel = new Label();
+            scannerPictureBox = new PictureBox();
+            ((System.ComponentModel.ISupportInitialize)scannerPictureBox).BeginInit();
             SuspendLayout();
             // 
             // doorListComboBox
             // 
             doorListComboBox.FormattingEnabled = true;
-            doorListComboBox.Location = new Point(35, 26);
+            doorListComboBox.Location = new Point(50, 27);
             doorListComboBox.Name = "doorListComboBox";
-            doorListComboBox.Size = new Size(196, 23);
+            doorListComboBox.Size = new Size(200, 23);
             doorListComboBox.TabIndex = 0;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(35, 167);
-            label1.Name = "label1";
-            label1.Size = new Size(38, 15);
-            label1.TabIndex = 3;
-            label1.Text = "label1";
             // 
             // enterExitComboBox
             // 
             enterExitComboBox.FormattingEnabled = true;
             enterExitComboBox.Items.AddRange(new object[] { "Enter", "Exit", "Enter/Exit" });
-            enterExitComboBox.Location = new Point(35, 79);
+            enterExitComboBox.Location = new Point(50, 73);
             enterExitComboBox.Name = "enterExitComboBox";
-            enterExitComboBox.Size = new Size(196, 23);
+            enterExitComboBox.Size = new Size(200, 23);
             enterExitComboBox.TabIndex = 4;
             // 
             // timer1
@@ -67,27 +59,41 @@
             timer1.Enabled = true;
             timer1.Tick += timer1_Tick;
             // 
-            // label2
+            // ClientDisplayLabel
             // 
-            label2.AutoSize = true;
-            label2.Location = new Point(35, 289);
-            label2.Name = "label2";
-            label2.Size = new Size(38, 15);
-            label2.TabIndex = 5;
-            label2.Text = "label2";
+            ClientDisplayLabel.AutoSize = true;
+            ClientDisplayLabel.BackColor = SystemColors.ActiveCaptionText;
+            ClientDisplayLabel.Font = new Font("OCR A Extended", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            ClientDisplayLabel.ForeColor = Color.ForestGreen;
+            ClientDisplayLabel.Location = new Point(15, 109);
+            ClientDisplayLabel.MaximumSize = new Size(150, 0);
+            ClientDisplayLabel.MinimumSize = new Size(250, 50);
+            ClientDisplayLabel.Name = "ClientDisplayLabel";
+            ClientDisplayLabel.Size = new Size(250, 50);
+            ClientDisplayLabel.TabIndex = 5;
+            ClientDisplayLabel.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // scannerPictureBox
+            // 
+            scannerPictureBox.Location = new Point(12, 176);
+            scannerPictureBox.Name = "scannerPictureBox";
+            scannerPictureBox.Size = new Size(260, 273);
+            scannerPictureBox.TabIndex = 6;
+            scannerPictureBox.TabStop = false;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(291, 450);
-            Controls.Add(label2);
+            ClientSize = new Size(284, 461);
+            Controls.Add(scannerPictureBox);
+            Controls.Add(ClientDisplayLabel);
             Controls.Add(enterExitComboBox);
-            Controls.Add(label1);
             Controls.Add(doorListComboBox);
             Name = "Form1";
             Text = "Form1";
             Load += Form1_Load;
+            ((System.ComponentModel.ISupportInitialize)scannerPictureBox).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -95,9 +101,9 @@
         #endregion
 
         private ComboBox doorListComboBox;
-        private Label label1;
         private ComboBox enterExitComboBox;
         private System.Windows.Forms.Timer timer1;
-        private Label label2;
+        private Label ClientDisplayLabel;
+        private PictureBox scannerPictureBox;
     }
 }
