@@ -136,7 +136,6 @@ namespace SzakdolgozatGRPCKliens
             CardInformation tmpCardInformation = new CardInformation();
             tmpCardInformation.CardID = localCardID;
             DoorInformation tmpDoorInformation = doors.Find(x => x.DoorName == doorListComboBox.SelectedItem.ToString());
-
             DoorEvent tmpEvent = new DoorEvent();
             tmpEvent.CardID = tmpCardInformation;
             tmpEvent.DoorInfo = tmpDoorInformation;
