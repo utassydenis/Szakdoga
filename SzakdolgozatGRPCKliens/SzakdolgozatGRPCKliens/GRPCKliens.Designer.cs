@@ -1,6 +1,6 @@
 ﻿namespace SzakdolgozatGRPCKliens
 {
-    partial class Form1
+    partial class GRPCKliens
     {
         /// <summary>
         ///  Required designer variable.
@@ -81,7 +81,7 @@
             scannerPictureBox.TabIndex = 6;
             scannerPictureBox.TabStop = false;
             // 
-            // Form1
+            // GRPCKliens
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -90,9 +90,9 @@
             Controls.Add(ClientDisplayLabel);
             Controls.Add(enterExitComboBox);
             Controls.Add(doorListComboBox);
-            Name = "Form1";
-            Text = "Form1";
-            Load += Form1_Load;
+            Name = "GRPCKliens";
+            Text = "Kliens";
+            Load += GRPCKliensForm_Load;
             ((System.ComponentModel.ISupportInitialize)scannerPictureBox).EndInit();
             ResumeLayout(false);
             PerformLayout();

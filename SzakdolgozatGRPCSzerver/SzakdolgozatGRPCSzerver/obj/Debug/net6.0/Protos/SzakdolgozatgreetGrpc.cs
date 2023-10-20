@@ -53,6 +53,12 @@ namespace SzakdolgozatGRPCSzerver {
     static readonly grpc::Marshaller<global::SzakdolgozatGRPCSzerver.Empty> __Marshaller_Szakdolgozat_Empty = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::SzakdolgozatGRPCSzerver.Empty.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::SzakdolgozatGRPCSzerver.DoorInformation> __Marshaller_Szakdolgozat_DoorInformation = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::SzakdolgozatGRPCSzerver.DoorInformation.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::SzakdolgozatGRPCSzerver.UserInformation> __Marshaller_Szakdolgozat_UserInformation = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::SzakdolgozatGRPCSzerver.UserInformation.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::SzakdolgozatGRPCSzerver.DatedUserInformation> __Marshaller_Szakdolgozat_DatedUserInformation = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::SzakdolgozatGRPCSzerver.DatedUserInformation.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::SzakdolgozatGRPCSzerver.UserActivity> __Marshaller_Szakdolgozat_UserActivity = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::SzakdolgozatGRPCSzerver.UserActivity.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::SzakdolgozatGRPCSzerver.DoorEvent, global::SzakdolgozatGRPCSzerver.Result> __Method_Enter = new grpc::Method<global::SzakdolgozatGRPCSzerver.DoorEvent, global::SzakdolgozatGRPCSzerver.Result>(
@@ -85,6 +91,22 @@ namespace SzakdolgozatGRPCSzerver {
         "ListDoors",
         __Marshaller_Szakdolgozat_Empty,
         __Marshaller_Szakdolgozat_DoorInformation);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::SzakdolgozatGRPCSzerver.Empty, global::SzakdolgozatGRPCSzerver.UserInformation> __Method_ListUsers = new grpc::Method<global::SzakdolgozatGRPCSzerver.Empty, global::SzakdolgozatGRPCSzerver.UserInformation>(
+        grpc::MethodType.ServerStreaming,
+        __ServiceName,
+        "ListUsers",
+        __Marshaller_Szakdolgozat_Empty,
+        __Marshaller_Szakdolgozat_UserInformation);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::SzakdolgozatGRPCSzerver.DatedUserInformation, global::SzakdolgozatGRPCSzerver.UserActivity> __Method_ListUserActivity = new grpc::Method<global::SzakdolgozatGRPCSzerver.DatedUserInformation, global::SzakdolgozatGRPCSzerver.UserActivity>(
+        grpc::MethodType.ServerStreaming,
+        __ServiceName,
+        "ListUserActivity",
+        __Marshaller_Szakdolgozat_DatedUserInformation,
+        __Marshaller_Szakdolgozat_UserActivity);
 
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
@@ -120,6 +142,18 @@ namespace SzakdolgozatGRPCSzerver {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
 
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task ListUsers(global::SzakdolgozatGRPCSzerver.Empty request, grpc::IServerStreamWriter<global::SzakdolgozatGRPCSzerver.UserInformation> responseStream, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task ListUserActivity(global::SzakdolgozatGRPCSzerver.DatedUserInformation request, grpc::IServerStreamWriter<global::SzakdolgozatGRPCSzerver.UserActivity> responseStream, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
     }
 
     /// <summary>Creates service definition that can be registered with a server</summary>
@@ -131,7 +165,9 @@ namespace SzakdolgozatGRPCSzerver {
           .AddMethod(__Method_Enter, serviceImpl.Enter)
           .AddMethod(__Method_Exit, serviceImpl.Exit)
           .AddMethod(__Method_EnterExit, serviceImpl.EnterExit)
-          .AddMethod(__Method_ListDoors, serviceImpl.ListDoors).Build();
+          .AddMethod(__Method_ListDoors, serviceImpl.ListDoors)
+          .AddMethod(__Method_ListUsers, serviceImpl.ListUsers)
+          .AddMethod(__Method_ListUserActivity, serviceImpl.ListUserActivity).Build();
     }
 
     /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the  service binding logic.
@@ -145,6 +181,8 @@ namespace SzakdolgozatGRPCSzerver {
       serviceBinder.AddMethod(__Method_Exit, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::SzakdolgozatGRPCSzerver.DoorEvent, global::SzakdolgozatGRPCSzerver.Result>(serviceImpl.Exit));
       serviceBinder.AddMethod(__Method_EnterExit, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::SzakdolgozatGRPCSzerver.DoorEvent, global::SzakdolgozatGRPCSzerver.Result>(serviceImpl.EnterExit));
       serviceBinder.AddMethod(__Method_ListDoors, serviceImpl == null ? null : new grpc::ServerStreamingServerMethod<global::SzakdolgozatGRPCSzerver.Empty, global::SzakdolgozatGRPCSzerver.DoorInformation>(serviceImpl.ListDoors));
+      serviceBinder.AddMethod(__Method_ListUsers, serviceImpl == null ? null : new grpc::ServerStreamingServerMethod<global::SzakdolgozatGRPCSzerver.Empty, global::SzakdolgozatGRPCSzerver.UserInformation>(serviceImpl.ListUsers));
+      serviceBinder.AddMethod(__Method_ListUserActivity, serviceImpl == null ? null : new grpc::ServerStreamingServerMethod<global::SzakdolgozatGRPCSzerver.DatedUserInformation, global::SzakdolgozatGRPCSzerver.UserActivity>(serviceImpl.ListUserActivity));
     }
 
   }

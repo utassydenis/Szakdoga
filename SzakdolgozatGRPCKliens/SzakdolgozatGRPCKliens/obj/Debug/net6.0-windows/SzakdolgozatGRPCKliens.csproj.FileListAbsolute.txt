@@ -1,5 +1,4 @@
 C:\Users\utass\Desktop\Szakdoga\SzakdolgozatGRPCKliens\SzakdolgozatGRPCKliens\obj\Debug\net6.0-windows\SzakdolgozatGRPCKliens.csproj.AssemblyReference.cache
-C:\Users\utass\Desktop\Szakdoga\SzakdolgozatGRPCKliens\SzakdolgozatGRPCKliens\obj\Debug\net6.0-windows\SzakdolgozatGRPCKliens.Form1.resources
 C:\Users\utass\Desktop\Szakdoga\SzakdolgozatGRPCKliens\SzakdolgozatGRPCKliens\obj\Debug\net6.0-windows\SzakdolgozatGRPCKliens.csproj.GenerateResource.cache
 C:\Users\utass\Desktop\Szakdoga\SzakdolgozatGRPCKliens\SzakdolgozatGRPCKliens\obj\Debug\net6.0-windows\SzakdolgozatGRPCKliens.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\utass\Desktop\Szakdoga\SzakdolgozatGRPCKliens\SzakdolgozatGRPCKliens\bin\Debug\net6.0-windows\SzakdolgozatGRPCKliens.exe
@@ -46,3 +45,4 @@ C:\Users\utass\Desktop\SzakdolgozatGRPCKliens\SzakdolgozatGRPCKliens\obj\Debug\n
 C:\Users\utass\Desktop\SzakdolgozatGRPCKliens\SzakdolgozatGRPCKliens\obj\Debug\net6.0-windows\ref\SzakdolgozatGRPCKliens.dll
 C:\Users\utass\Desktop\SzakdolgozatGRPCKliens\SzakdolgozatGRPCKliens\bin\Debug\net6.0-windows\MiFare.dll
 C:\Users\utass\Desktop\Szakdoga\SzakdolgozatGRPCKliens\SzakdolgozatGRPCKliens\bin\Debug\net6.0-windows\MiFare.dll
+C:\Users\utass\Desktop\Szakdoga\SzakdolgozatGRPCKliens\SzakdolgozatGRPCKliens\obj\Debug\net6.0-windows\SzakdolgozatGRPCKliens.GRPCKliens.resources

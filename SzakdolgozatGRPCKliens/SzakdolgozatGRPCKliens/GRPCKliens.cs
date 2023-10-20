@@ -9,7 +9,7 @@ using System.Text;
 
 namespace SzakdolgozatGRPCKliens
 {
-    public partial class Form1 : Form
+    public partial class GRPCKliens : Form
     {
         GrpcChannel channel = GrpcChannel.ForAddress("https://localhost:7165");
         SzakdolgozatGreeter.SzakdolgozatGreeterClient client;
@@ -17,14 +17,13 @@ namespace SzakdolgozatGRPCKliens
         private SmartCardReader reader;
         private MiFareCard card;
         string localCardID = "";
-        public Form1()
+        public GRPCKliens()
         {
             InitializeComponent();
             GetDevices();
         }
-
         List<DoorInformation> doors = new List<DoorInformation>();
-        private async void Form1_Load(object sender, EventArgs e)
+        private async void GRPCKliensForm_Load(object sender, EventArgs e)
         {
             client = new SzakdolgozatGreeter.SzakdolgozatGreeterClient(channel);
             Bitmap image = new Bitmap("..\\..\\..\\Pictures\\ACS-ACR1255U-J1-Front.jpg");

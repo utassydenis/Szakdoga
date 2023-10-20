@@ -10,7 +10,8 @@ service SzakdolgozatGreeter {
 	rpc EnterExit(DoorEvent) returns (Result);
 	
 	rpc ListDoors(Empty) returns (stream DoorInformation);
-	
+	rpc ListUsers(Empty) returns (stream UserInformation);
+	rpc ListUserActivity(DatedUserInformation) returns (stream UserActivity);
 }
 
 message Empty{
@@ -27,8 +28,21 @@ message DoorInformation{
 	string door_name = 2;
 }
 message DoorEvent{
-	CardInformation Card_Information = 1;
+	CardInformation card_information = 1;
 	DoorInformation door_info = 2;
 }
-
-
+message UserInformation{
+	int32 user_id = 1;
+	string user_name = 2;
+}
+message DatedUserInformation{
+	UserInformation user_info = 1;
+	string start_time = 2;
+	string end_time = 3;
+}
+message UserActivity{
+	UserInformation user_info = 1;
+	DoorEvent door_event = 2;
+	string event_type = 3;
+	string event_time = 4;
+}

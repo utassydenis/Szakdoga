@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "+OoOAFeTLqazRintmo77/BLjv3XzPQL8zeo9ztgJDAknVCdRM87bDvNDNylgK0jH1jKT7//dsDpvG60w8VdvAg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\utass\\Desktop\\Szakdoga\\SzakdolgozatGRPCAdminKliens\\SzakdolgozatGRPCAdminKliens\\SzakdolgozatGRPCAdminKliens.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\utass\\.nuget\\packages\\google.protobuf\\3.24.4\\google.protobuf.3.24.4.nupkg.sha512",
+    "C:\\Users\\utass\\.nuget\\packages\\grpc.core.api\\2.58.0\\grpc.core.api.2.58.0.nupkg.sha512",
+    "C:\\Users\\utass\\.nuget\\packages\\grpc.net.client\\2.58.0\\grpc.net.client.2.58.0.nupkg.sha512",
+    "C:\\Users\\utass\\.nuget\\packages\\grpc.net.common\\2.58.0\\grpc.net.common.2.58.0.nupkg.sha512",
+    "C:\\Users\\utass\\.nuget\\packages\\grpc.tools\\2.59.0\\grpc.tools.2.59.0.nupkg.sha512",
+    "C:\\Users\\utass\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\6.0.0\\microsoft.extensions.logging.abstractions.6.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
