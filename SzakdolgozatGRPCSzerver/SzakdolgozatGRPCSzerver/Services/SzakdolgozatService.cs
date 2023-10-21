@@ -118,7 +118,7 @@ namespace SzakdolgozatGRPCSzerver.Services
             {
                 UserInformation errorUser = new UserInformation();
                 errorUser.UserId = 00;
-                errorUser.UserName = "Failed to establish connection to database.";
+                errorUser.UserName = "";
                 _logger.LogError("Failed to establish connection to database.");
                 await responseStream.WriteAsync(errorUser);
             }
@@ -169,7 +169,7 @@ namespace SzakdolgozatGRPCSzerver.Services
             {
                 _logger.LogError("Failed to establish connection to database.");
             }
-        }
+        }      
         #region Helper Methods
         public bool OpenConnection()
         {
@@ -317,7 +317,7 @@ namespace SzakdolgozatGRPCSzerver.Services
                 , connection);
             cmd.ExecuteNonQuery();
         }
-        #endregion
+
         public UserInformation createUserInformation(int userID,string username)
         {
             UserInformation userInformation = new UserInformation();
@@ -346,5 +346,6 @@ namespace SzakdolgozatGRPCSzerver.Services
             doorEvent.DoorInfo = doorInformation;
             return doorEvent;
         }
+        #endregion
     }
 }

@@ -14,37 +14,22 @@ namespace SzakdolgozatGRPCKliens
         GrpcChannel channel = GrpcChannel.ForAddress("https://localhost:7165");
         SzakdolgozatGreeter.SzakdolgozatGreeterClient client;
         string logFilePath = "..\\..\\..\\LogFiles\\logFiles.txt";
+
         private SmartCardReader reader;
         private MiFareCard card;
         string localCardID = "";
+        int readerChecker = 0;
         public GRPCKliens()
         {
             InitializeComponent();
             GetDevices();
         }
         List<DoorInformation> doors = new List<DoorInformation>();
-        private async void GRPCKliensForm_Load(object sender, EventArgs e)
+        private void GRPCKliensForm_Load(object sender, EventArgs e)
         {
             client = new SzakdolgozatGreeter.SzakdolgozatGreeterClient(channel);
-            Bitmap image = new Bitmap("..\\..\\..\\Pictures\\ACS-ACR1255U-J1-Front.jpg");
-            scannerPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
-            scannerPictureBox.Image = (Image)image;
-            try
-            {
-                using (var call = client.ListDoors(new Empty { }))
-                {
-                    while (await call.ResponseStream.MoveNext())
-                    {
-                        DoorInformation tmp = call.ResponseStream.Current;
-                        doors.Add(tmp);
-                        doorListComboBox.Items.Add(tmp.DoorName);
-                    }
-                }
-            }
-            catch (RpcException ex)
-            {
-                File.AppendAllText(logFilePath, ex.Message + ",Time:" + DateTime.Now.ToString("yyyy'-'MM'-'dd HH':'mm':'ss") + "\n", Encoding.UTF8);
-            }
+            setPictureBox();
+            requestDoorList();
         }
         #region Reader and card handling
         private async void GetDevices()
@@ -54,10 +39,9 @@ namespace SzakdolgozatGRPCKliens
                 reader = await CardReader.FindAsync();
                 if (reader == null)
                 {
-                    ClientDisplayLabel.Text = "No Readers Found";
                     return;
                 }
-
+                readerChecker++;
                 reader.CardAdded += CardAdded;
                 reader.CardRemoved += CardRemoved;
             }
@@ -68,14 +52,13 @@ namespace SzakdolgozatGRPCKliens
         }
         private void CardRemoved(object sender, EventArgs e)
         {
-            Debug.WriteLine("Card Removed");
             card?.Dispose();
             card = null;
-
+            localCardID = "";
+            ClientDisplayLabel.Text = "Reader operational.";
         }
         private async void CardAdded(object sender, CardEventArgs args)
         {
-            Debug.WriteLine("Card Added");
             try
             {
                 await HandleCard(args);
@@ -110,25 +93,50 @@ namespace SzakdolgozatGRPCKliens
         {
             if (reader == null)
             {
+                ClientDisplayLabel.Text = "No readers connected!";
                 GetDevices();
+            }
+            if (readerChecker == 1)
+            {
+                readerChecker++;
+                ClientDisplayLabel.Text = "Reader operational";
             }
             if (localCardID != "" && doorListComboBox.Text != "")
             {
                 if (enterExitComboBox.Text == "Enter")
                 {
-                    EnterDoor();
+                    enterDoor();
                     localCardID = "";
                 }
                 else if (enterExitComboBox.Text == "Exit")
                 {
-                    ExitDoor();
+                    exitDoor();
                     localCardID = "";
                 }
                 else if (enterExitComboBox.Text == "Enter/Exit")
                 {
-                    EnterExitDoor();
+                    enterExitDoor();
                     localCardID = "";
                 }
+            }
+        }
+        private async void requestDoorList()
+        {
+            try
+            {
+                using (var call = client.ListDoors(new Empty { }))
+                {
+                    while (await call.ResponseStream.MoveNext())
+                    {
+                        DoorInformation tmp = call.ResponseStream.Current;
+                        doors.Add(tmp);
+                        doorListComboBox.Items.Add(tmp.DoorName);
+                    }
+                }
+            }
+            catch (RpcException ex)
+            {
+                File.AppendAllText(logFilePath, ex.Message + ",Time:" + DateTime.Now.ToString("yyyy'-'MM'-'dd HH':'mm':'ss") + "\n", Encoding.UTF8);
             }
         }
         private DoorEvent SetupDoorEvent()
@@ -141,7 +149,7 @@ namespace SzakdolgozatGRPCKliens
             tmpEvent.DoorInfo = tmpDoorInformation;
             return tmpEvent;
         }
-        private void EnterDoor()
+        private void enterDoor()
         {
             try
             {
@@ -153,7 +161,7 @@ namespace SzakdolgozatGRPCKliens
                 File.AppendAllText(logFilePath, ex.Message + ",Time:" + DateTime.Now.ToString("yyyy'-'MM'-'dd HH':'mm':'ss") + "\n", Encoding.UTF8);
             }
         }
-        private void ExitDoor()
+        private void exitDoor()
         {
             try
             {
@@ -165,7 +173,7 @@ namespace SzakdolgozatGRPCKliens
                 File.AppendAllText(logFilePath, ex.Message + ",Time:" + DateTime.Now.ToString("yyyy'-'MM'-'dd HH':'mm':'ss") + "\n", Encoding.UTF8);
             }
         }
-        private void EnterExitDoor()
+        private void enterExitDoor()
         {
             try
             {
@@ -176,6 +184,12 @@ namespace SzakdolgozatGRPCKliens
             {
                 File.AppendAllText(logFilePath, ex.Message + ",Time:" + DateTime.Now.ToString("yyyy'-'MM'-'dd HH':'mm':'ss") + "\n", Encoding.UTF8);
             }
+        }
+        private void setPictureBox()
+        {
+            Bitmap image = new Bitmap("..\\..\\..\\Pictures\\ACS-ACR1255U-J1-Front.jpg");
+            scannerPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+            scannerPictureBox.Image = (Image)image;
         }
     }
 }

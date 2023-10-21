@@ -40,18 +40,18 @@
             // doorListComboBox
             // 
             doorListComboBox.FormattingEnabled = true;
-            doorListComboBox.Location = new Point(50, 27);
+            doorListComboBox.Location = new Point(12, 12);
             doorListComboBox.Name = "doorListComboBox";
-            doorListComboBox.Size = new Size(200, 23);
+            doorListComboBox.Size = new Size(150, 23);
             doorListComboBox.TabIndex = 0;
             // 
             // enterExitComboBox
             // 
             enterExitComboBox.FormattingEnabled = true;
             enterExitComboBox.Items.AddRange(new object[] { "Enter", "Exit", "Enter/Exit" });
-            enterExitComboBox.Location = new Point(50, 73);
+            enterExitComboBox.Location = new Point(12, 70);
             enterExitComboBox.Name = "enterExitComboBox";
-            enterExitComboBox.Size = new Size(200, 23);
+            enterExitComboBox.Size = new Size(150, 23);
             enterExitComboBox.TabIndex = 4;
             // 
             // timer1
