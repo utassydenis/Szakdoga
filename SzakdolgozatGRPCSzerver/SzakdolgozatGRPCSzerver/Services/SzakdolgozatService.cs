@@ -73,7 +73,18 @@ namespace SzakdolgozatGRPCSzerver.Services
             {
                 return Task.FromResult(new Result { Message = "Failed to connect to database." });
             }
-            return CheckUserLastActivityAtDoor(doorEvent, context);
+            MySqlCommand cmd = new MySqlCommand("SELECT time_entered FROM door_logs " 
+                + "WHERE card_id = '" + doorEvent.CardInformation.CardID + "' "
+                + "AND door_id= '" + doorEvent.DoorInfo.DoorID + "' " 
+                + "ORDER BY ID DESC LIMIT 1; "
+                , connection);
+            var result = cmd.ExecuteScalar();
+            CloseConnection();
+            if (result == null || result.ToString() == "")
+            {
+                return Enter(doorEvent, context);
+            }
+            return Exit(doorEvent, context);
         }
         public override async Task ListDoors(Empty e, IServerStreamWriter<DoorInformation> responseStream, ServerCallContext context)
         {
@@ -292,21 +303,6 @@ namespace SzakdolgozatGRPCSzerver.Services
             }
             return Task.FromResult(new Result { Message = "OK!" });
         }
-        public Task<Result> CheckUserLastActivityAtDoor(DoorEvent doorEvent, ServerCallContext context)
-        {
-            MySqlCommand cmd = new MySqlCommand("SELECT time_entered FROM door_logs " +
-                "WHERE card_id = '" + doorEvent.CardInformation.CardID + "'" +
-                "AND door_id= '" + doorEvent.DoorInfo.DoorID + "' " +
-                "ORDER BY ID DESC LIMIT 1; "
-                , connection);
-            var result = cmd.ExecuteScalar();
-            CloseConnection();
-            if (result == null || result.ToString() == "")
-            {
-                return Enter(doorEvent, context);
-            }
-            return Exit(doorEvent, context);
-        }
         public void insertErrorIntoDatabase(DoorEvent doorEvent, string message)
         {
             MySqlCommand cmd = new MySqlCommand("INSERT INTO card_error_logs (card_id,door_id,error_reason,error_log_time)"
@@ -317,7 +313,6 @@ namespace SzakdolgozatGRPCSzerver.Services
                 , connection);
             cmd.ExecuteNonQuery();
         }
-
         public UserInformation createUserInformation(int userID,string username)
         {
             UserInformation userInformation = new UserInformation();

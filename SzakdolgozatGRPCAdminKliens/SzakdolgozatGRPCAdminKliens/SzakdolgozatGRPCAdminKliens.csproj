@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Logs\" />
     <Folder Include="Protos\" />
   </ItemGroup>
 

@@ -18,7 +18,7 @@ namespace SzakdolgozatGRPCKliens
         private SmartCardReader reader;
         private MiFareCard card;
         string localCardID = "";
-        int readerChecker = 0;
+        bool readerChecker = false;
         public GRPCKliens()
         {
             InitializeComponent();
@@ -28,6 +28,9 @@ namespace SzakdolgozatGRPCKliens
         private void GRPCKliensForm_Load(object sender, EventArgs e)
         {
             client = new SzakdolgozatGreeter.SzakdolgozatGreeterClient(channel);
+            doorListComboBox.Visible = false;
+            enterExitComboBox.Visible = false;
+            refreshButton.Visible = false;
             setPictureBox();
             requestDoorList();
         }
@@ -41,7 +44,7 @@ namespace SzakdolgozatGRPCKliens
                 {
                     return;
                 }
-                readerChecker++;
+                readerChecker = true;
                 reader.CardAdded += CardAdded;
                 reader.CardRemoved += CardRemoved;
             }
@@ -96,9 +99,9 @@ namespace SzakdolgozatGRPCKliens
                 ClientDisplayLabel.Text = "No readers connected!";
                 GetDevices();
             }
-            if (readerChecker == 1)
+            if (readerChecker)
             {
-                readerChecker++;
+                readerChecker = false;
                 ClientDisplayLabel.Text = "Reader operational";
             }
             if (localCardID != "" && doorListComboBox.Text != "")
@@ -129,8 +132,19 @@ namespace SzakdolgozatGRPCKliens
                     while (await call.ResponseStream.MoveNext())
                     {
                         DoorInformation tmp = call.ResponseStream.Current;
-                        doors.Add(tmp);
-                        doorListComboBox.Items.Add(tmp.DoorName);
+                        if (tmp.DoorID == 00)
+                        {
+                            refreshButton.Visible = true;
+                        }
+                        else
+                        {
+                            doors.Add(tmp);
+                            doorListComboBox.Items.Add(tmp.DoorName);
+                            doorListComboBox.Visible = true;
+                            enterExitComboBox.Visible = true;
+                            refreshButton.Visible = false;
+                        }
+
                     }
                 }
             }
@@ -190,6 +204,11 @@ namespace SzakdolgozatGRPCKliens
             Bitmap image = new Bitmap("..\\..\\..\\Pictures\\ACS-ACR1255U-J1-Front.jpg");
             scannerPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             scannerPictureBox.Image = (Image)image;
+        }
+
+        private void refreshButton_Click(object sender, EventArgs e)
+        {
+            requestDoorList();
         }
     }
 }

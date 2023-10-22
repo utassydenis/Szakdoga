@@ -128,7 +128,7 @@ namespace SzakdolgozatGRPCAdminKliens
             }
             catch (RpcException ex)
             {
-
+                //To-do
             }
         }
     }
