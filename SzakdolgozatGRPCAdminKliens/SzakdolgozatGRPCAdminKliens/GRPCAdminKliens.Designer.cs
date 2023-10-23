@@ -35,6 +35,7 @@
             endDateTimePicker = new DateTimePicker();
             userEventsdataGridView = new DataGridView();
             submitButton = new Button();
+            refreshButton = new Button();
             ((System.ComponentModel.ISupportInitialize)userEventsdataGridView).BeginInit();
             SuspendLayout();
             // 
@@ -43,7 +44,7 @@
             userIDComboBox.FormattingEnabled = true;
             userIDComboBox.Location = new Point(28, 29);
             userIDComboBox.Name = "userIDComboBox";
-            userIDComboBox.Size = new Size(121, 23);
+            userIDComboBox.Size = new Size(331, 23);
             userIDComboBox.TabIndex = 0;
             // 
             // startDateCheckBox
@@ -87,11 +88,12 @@
             // 
             // userEventsdataGridView
             // 
+            userEventsdataGridView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             userEventsdataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            userEventsdataGridView.Location = new Point(389, 29);
+            userEventsdataGridView.Location = new Point(383, 0);
             userEventsdataGridView.Name = "userEventsdataGridView";
             userEventsdataGridView.RowTemplate.Height = 25;
-            userEventsdataGridView.Size = new Size(399, 409);
+            userEventsdataGridView.Size = new Size(417, 450);
             userEventsdataGridView.TabIndex = 5;
             // 
             // submitButton
@@ -104,11 +106,22 @@
             submitButton.UseVisualStyleBackColor = true;
             submitButton.Click += submitButton_Click;
             // 
+            // refreshButton
+            // 
+            refreshButton.Location = new Point(131, 198);
+            refreshButton.Name = "refreshButton";
+            refreshButton.Size = new Size(75, 23);
+            refreshButton.TabIndex = 7;
+            refreshButton.Text = "Refresh";
+            refreshButton.UseVisualStyleBackColor = true;
+            refreshButton.Click += refreshButton_Click;
+            // 
             // GRPCAdminKliens
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(refreshButton);
             Controls.Add(submitButton);
             Controls.Add(userEventsdataGridView);
             Controls.Add(endDateTimePicker);
@@ -133,5 +146,6 @@
         private DateTimePicker endDateTimePicker;
         private DataGridView userEventsdataGridView;
         private Button submitButton;
+        private Button refreshButton;
     }
 }

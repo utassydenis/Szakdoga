@@ -18,6 +18,8 @@ namespace SzakdolgozatGRPCAdminKliens
         {
             startDateTimePicker.Enabled = false;
             endDateTimePicker.Enabled = false;
+            refreshButton.Visible = true;
+            setStartupVisibilities();
             changeDateTimeFormat();
             requestUserList();
             setupUserEventsDataGridView();
@@ -87,8 +89,20 @@ namespace SzakdolgozatGRPCAdminKliens
                     while (await call.ResponseStream.MoveNext())
                     {
                         UserInformation tmp = call.ResponseStream.Current;
-                        users.Add(tmp);
-                        userIDComboBox.Items.Add(tmp.UserName);
+                        if (tmp.UserId == 00)
+                        {
+                            refreshButton.Visible = true;
+                        }
+                        else
+                        {
+                            users.Add(tmp);
+                            userIDComboBox.Items.Add(tmp.UserName);
+                            startDateCheckBox.Visible = true;
+                            startDateTimePicker.Visible = true;
+                            endDateCheckBox.Visible = true;
+                            endDateTimePicker.Visible = true;
+                            submitButton.Visible = true;
+                        }
                     }
                 }
             }
@@ -96,10 +110,11 @@ namespace SzakdolgozatGRPCAdminKliens
             {
                 //File.AppendAllText(logFilePath, ex.Message + ",Time:" + DateTime.Now.ToString("yyyy'-'MM'-'dd HH':'mm':'ss") + "\n", Encoding.UTF8);
             }
-        } 
+        }
         private void setupUserEventsDataGridView()
         {
             userEventsdataGridView.AllowUserToAddRows = false;
+
             userEventsdataGridView.ColumnCount = 7;
             userEventsdataGridView.Columns[0].Name = "Username";
             userEventsdataGridView.Columns[1].Name = "User ID";
@@ -108,6 +123,8 @@ namespace SzakdolgozatGRPCAdminKliens
             userEventsdataGridView.Columns[4].Name = "Door name";
             userEventsdataGridView.Columns[5].Name = "Event";
             userEventsdataGridView.Columns[6].Name = "Event time";
+            userEventsdataGridView.AutoResizeColumns();
+            userEventsdataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
         private async void populateUserEventsDataGridView()
         {
@@ -130,6 +147,21 @@ namespace SzakdolgozatGRPCAdminKliens
             {
                 //To-do
             }
+        }
+        private void setStartupVisibilities()
+        {
+            startDateCheckBox.Visible = false;
+            startDateTimePicker.Visible = false;
+            endDateCheckBox.Visible = false;
+            endDateTimePicker.Visible = false;
+            userIDComboBox.Visible = false;
+            refreshButton.Visible = false;
+            submitButton.Visible = false;
+        }
+
+        private void refreshButton_Click(object sender, EventArgs e)
+        {
+            requestUserList();
         }
     }
 }
