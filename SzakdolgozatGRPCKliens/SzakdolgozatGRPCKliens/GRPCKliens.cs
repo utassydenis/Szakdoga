@@ -50,7 +50,7 @@ namespace SzakdolgozatGRPCKliens
             }
             catch (Exception e)
             {
-                File.AppendAllText(logFilePath, e.Message + ",Time:" + DateTime.Now.ToString("yyyy'-'MM'-'dd HH':'mm':'ss") + "\n", Encoding.UTF8);
+                File.AppendAllText(logFilePath, e.Message + "Reader not found." + ",Time:" + DateTime.Now.ToString("yyyy'-'MM'-'dd HH':'mm':'ss") + "\n", Encoding.UTF8);
             }
         }
         private void CardRemoved(object sender, EventArgs e)
@@ -88,7 +88,7 @@ namespace SzakdolgozatGRPCKliens
             }
             catch (Exception e)
             {
-                File.AppendAllText(logFilePath, e.Message + ",Time:" + DateTime.Now.ToString("yyyy'-'MM'-'dd HH':'mm':'ss") + "\n", Encoding.UTF8);
+                File.AppendAllText(logFilePath, e.Message + "Card handling error." + ",Time:" + DateTime.Now.ToString("yyyy'-'MM'-'dd HH':'mm':'ss") + "\n", Encoding.UTF8);
             }
         }
         #endregion
@@ -150,7 +150,7 @@ namespace SzakdolgozatGRPCKliens
             }
             catch (RpcException ex)
             {
-                File.AppendAllText(logFilePath, ex.Message + ",Time:" + DateTime.Now.ToString("yyyy'-'MM'-'dd HH':'mm':'ss") + "\n", Encoding.UTF8);
+                File.AppendAllText(logFilePath, ex.Message + "Server couldn't be reached" + ",Time:" + DateTime.Now.ToString("yyyy'-'MM'-'dd HH':'mm':'ss") + "\n", Encoding.UTF8);
             }
         }
         private DoorEvent SetupDoorEvent()
@@ -172,7 +172,7 @@ namespace SzakdolgozatGRPCKliens
             }
             catch (RpcException ex)
             {
-                File.AppendAllText(logFilePath, ex.Message + ",Time:" + DateTime.Now.ToString("yyyy'-'MM'-'dd HH':'mm':'ss") + "\n", Encoding.UTF8);
+                File.AppendAllText(logFilePath, ex.Message + " Server couldn't be reached. " + ",Time:" + DateTime.Now.ToString("yyyy'-'MM'-'dd HH':'mm':'ss") + "\n", Encoding.UTF8);
             }
         }
         private void exitDoor()
@@ -184,7 +184,7 @@ namespace SzakdolgozatGRPCKliens
             }
             catch (RpcException ex)
             {
-                File.AppendAllText(logFilePath, ex.Message + ",Time:" + DateTime.Now.ToString("yyyy'-'MM'-'dd HH':'mm':'ss") + "\n", Encoding.UTF8);
+                File.AppendAllText(logFilePath, ex.Message + " Server couldn't be reached. " + ",Time:" + DateTime.Now.ToString("yyyy'-'MM'-'dd HH':'mm':'ss") + "\n", Encoding.UTF8);
             }
         }
         private void enterExitDoor()
@@ -196,7 +196,7 @@ namespace SzakdolgozatGRPCKliens
             }
             catch (RpcException ex)
             {
-                File.AppendAllText(logFilePath, ex.Message + ",Time:" + DateTime.Now.ToString("yyyy'-'MM'-'dd HH':'mm':'ss") + "\n", Encoding.UTF8);
+                File.AppendAllText(logFilePath, ex.Message + " Server couldn't be reached. " + ",Time:" + DateTime.Now.ToString("yyyy'-'MM'-'dd HH':'mm':'ss") + "\n", Encoding.UTF8);
             }
         }
         private void setPictureBox()

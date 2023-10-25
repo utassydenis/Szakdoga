@@ -8,6 +8,7 @@ namespace SzakdolgozatGRPCAdminKliens
     {
         GrpcChannel channel = GrpcChannel.ForAddress("https://localhost:7165");
         SzakdolgozatGreeter.SzakdolgozatGreeterClient client;
+        string logFilePath = "..\\..\\..\\LogFiles\\logFiles.txt";
         public GRPCAdminKliens()
         {
             InitializeComponent();
@@ -108,7 +109,7 @@ namespace SzakdolgozatGRPCAdminKliens
             }
             catch (RpcException ex)
             {
-                //File.AppendAllText(logFilePath, ex.Message + ",Time:" + DateTime.Now.ToString("yyyy'-'MM'-'dd HH':'mm':'ss") + "\n", Encoding.UTF8);
+                File.AppendAllText(logFilePath, ex.Message + " A GRPC szervert nem lehetett elérni. " + ",Time:" + DateTime.Now.ToString("yyyy'-'MM'-'dd HH':'mm':'ss") + "\n", Encoding.UTF8);
             }
         }
         private void setupUserEventsDataGridView()
