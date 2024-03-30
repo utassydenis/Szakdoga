@@ -42,7 +42,7 @@
             // userIDComboBox
             // 
             userIDComboBox.FormattingEnabled = true;
-            userIDComboBox.Location = new Point(28, 29);
+            userIDComboBox.Location = new Point(28, 32);
             userIDComboBox.Name = "userIDComboBox";
             userIDComboBox.Size = new Size(331, 23);
             userIDComboBox.TabIndex = 0;

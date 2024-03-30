@@ -250,8 +250,10 @@ namespace SzakdolgozatGRPCSzerver.Services
                 + "' AND time_entered >'" + getTodayDate() + "';"
                 , connection);
             int result = int.Parse(cmd.ExecuteScalar() + "");
+
             if (result >= 1)
             {
+                Console.WriteLine(result);
                 return true;
             }
             return false;
@@ -288,7 +290,7 @@ namespace SzakdolgozatGRPCSzerver.Services
             }
             if (doorEvent.DoorInfo.DoorID == 5)
             {
-                if (CheckIfUserHasEntered(doorEvent.CardInformation.CardID))
+                if (!CheckIfUserHasEntered(doorEvent.CardInformation.CardID))
                 {
                     message = "Card:" + doorEvent.CardInformation.CardID + " was not used to enter.";
                     insertErrorIntoDatabase(doorEvent, message);

@@ -8,7 +8,7 @@ namespace SzakdolgozatGRPCAdminKliens
     {
         GrpcChannel channel = GrpcChannel.ForAddress("https://localhost:7165");
         SzakdolgozatGreeter.SzakdolgozatGreeterClient client;
-        string logFilePath = "..\\..\\..\\LogFiles\\logFiles.txt";
+        string logFilePath = "C:\\Users\\utass\\Desktop\\Szakdoga\\SzakdolgozatGRPCAdminKliens\\SzakdolgozatGRPCAdminKliens\\Logs\\logFiles.txt";
         public GRPCAdminKliens()
         {
             InitializeComponent();
@@ -103,12 +103,15 @@ namespace SzakdolgozatGRPCAdminKliens
                             endDateCheckBox.Visible = true;
                             endDateTimePicker.Visible = true;
                             submitButton.Visible = true;
+                            refreshButton.Visible = false;
+                            userIDComboBox.Visible = true;
                         }
                     }
                 }
             }
             catch (RpcException ex)
             {
+                popUpMessage();
                 File.AppendAllText(logFilePath, ex.Message + " A GRPC szervert nem lehetett elérni. " + ",Time:" + DateTime.Now.ToString("yyyy'-'MM'-'dd HH':'mm':'ss") + "\n", Encoding.UTF8);
             }
         }
@@ -146,7 +149,8 @@ namespace SzakdolgozatGRPCAdminKliens
             }
             catch (RpcException ex)
             {
-                //To-do
+                popUpMessage();
+                File.AppendAllText(logFilePath, ex.Message + " A GRPC szervert nem lehetett elérni. " + ",Time:" + DateTime.Now.ToString("yyyy'-'MM'-'dd HH':'mm':'ss") + "\n", Encoding.UTF8);
             }
         }
         private void setStartupVisibilities()
@@ -156,13 +160,16 @@ namespace SzakdolgozatGRPCAdminKliens
             endDateCheckBox.Visible = false;
             endDateTimePicker.Visible = false;
             userIDComboBox.Visible = false;
-            refreshButton.Visible = false;
             submitButton.Visible = false;
         }
 
         private void refreshButton_Click(object sender, EventArgs e)
         {
             requestUserList();
+        }
+        private void popUpMessage()
+        {
+            MessageBox.Show("A GRPC szervert nem lehetett elérni. Nézze meg a log fájlt.", "Error");
         }
     }
 }

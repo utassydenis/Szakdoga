@@ -13,7 +13,7 @@ namespace SzakdolgozatGRPCKliens
     {
         GrpcChannel channel = GrpcChannel.ForAddress("https://localhost:7165");
         SzakdolgozatGreeter.SzakdolgozatGreeterClient client;
-        string logFilePath = "..\\..\\..\\LogFiles\\logFiles.txt";
+        string logFilePath = "C:\\Users\\utass\\Desktop\\Szakdoga\\SzakdolgozatGRPCKliens\\SzakdolgozatGRPCKliens\\LogFiles\\logFiles.txt";
 
         private SmartCardReader reader;
         private MiFareCard card;
