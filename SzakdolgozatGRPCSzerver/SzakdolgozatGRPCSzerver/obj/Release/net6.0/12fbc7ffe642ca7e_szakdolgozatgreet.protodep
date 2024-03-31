@@ -1,0 +1,2 @@
+obj\Release\net6.0\Protos/Szakdolgozatgreet.cs \
+obj\Release\net6.0\Protos/SzakdolgozatgreetGrpc.cs: Protos/szakdolgozatgreet.proto

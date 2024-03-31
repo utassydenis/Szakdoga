@@ -58,7 +58,6 @@ namespace SzakdolgozatGRPCKliens
             card?.Dispose();
             card = null;
             localCardID = "";
-            ClientDisplayLabel.Text = "Reader operational.";
         }
         private async void CardAdded(object sender, CardEventArgs args)
         {
@@ -103,6 +102,9 @@ namespace SzakdolgozatGRPCKliens
             {
                 readerChecker = false;
                 ClientDisplayLabel.Text = "Reader operational";
+                doorListComboBox.Visible = true;
+                refreshButton.Visible = true;
+                enterExitComboBox.Visible = true;
             }
             if (localCardID != "" && doorListComboBox.Text != "")
             {
@@ -150,6 +152,7 @@ namespace SzakdolgozatGRPCKliens
             }
             catch (RpcException ex)
             {
+                ClientDisplayLabel.Text += "\n Database cannot be reached.";
                 File.AppendAllText(logFilePath, ex.Message + "Server couldn't be reached" + ",Time:" + DateTime.Now.ToString("yyyy'-'MM'-'dd HH':'mm':'ss") + "\n", Encoding.UTF8);
             }
         }
@@ -172,6 +175,7 @@ namespace SzakdolgozatGRPCKliens
             }
             catch (RpcException ex)
             {
+                ClientDisplayLabel.Text += "\n Database cannot be reached.";
                 File.AppendAllText(logFilePath, ex.Message + " Server couldn't be reached. " + ",Time:" + DateTime.Now.ToString("yyyy'-'MM'-'dd HH':'mm':'ss") + "\n", Encoding.UTF8);
             }
         }
@@ -184,6 +188,7 @@ namespace SzakdolgozatGRPCKliens
             }
             catch (RpcException ex)
             {
+                ClientDisplayLabel.Text += "\n Database cannot be reached.";
                 File.AppendAllText(logFilePath, ex.Message + " Server couldn't be reached. " + ",Time:" + DateTime.Now.ToString("yyyy'-'MM'-'dd HH':'mm':'ss") + "\n", Encoding.UTF8);
             }
         }
@@ -196,6 +201,7 @@ namespace SzakdolgozatGRPCKliens
             }
             catch (RpcException ex)
             {
+                ClientDisplayLabel.Text += "\n Database cannot be reached.";
                 File.AppendAllText(logFilePath, ex.Message + " Server couldn't be reached. " + ",Time:" + DateTime.Now.ToString("yyyy'-'MM'-'dd HH':'mm':'ss") + "\n", Encoding.UTF8);
             }
         }
