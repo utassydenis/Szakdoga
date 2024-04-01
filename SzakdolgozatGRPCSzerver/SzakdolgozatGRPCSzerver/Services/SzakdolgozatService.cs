@@ -50,7 +50,7 @@ namespace SzakdolgozatGRPCSzerver.Services
                 return Task.FromResult(new Result { Message = "Failed to connect to database." });
             }
             Task<Result> testResult = CheckDoorUsagePrerequisites(doorEvent);
-            if (testResult.Result.Message == "OK!")
+            if (testResult.Result.Message == "OK!" || testResult.Result.Message.Contains("was already used today for dining."))
             {
                 MySqlCommand cmd = new MySqlCommand("INSERT INTO door_logs(door_id,card_id,time_exited) "
                     + "VALUES('" + doorEvent.DoorInfo.DoorID + "','"
@@ -298,7 +298,7 @@ namespace SzakdolgozatGRPCSzerver.Services
                 }
                 if (!CheckIfUserCanDine(doorEvent))
                 {
-                    message = "Card:" + doorEvent.CardInformation.CardID + "was already used today.";
+                    message = "Card:" + doorEvent.CardInformation.CardID + "was already used today for dining.";
                     insertErrorIntoDatabase(doorEvent, message);
                     return Task.FromResult(new Result { Message = message });
                 }

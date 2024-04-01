@@ -17,6 +17,7 @@ namespace SzakdolgozatGRPCAdminKliens
         List<UserInformation> users = new List<UserInformation>();
         private void GRPCAdminKliensForm_Load(object sender, EventArgs e)
         {
+            userLabel.Visible = false;
             startDateTimePicker.Enabled = false;
             endDateTimePicker.Enabled = false;
             refreshButton.Visible = true;
@@ -92,6 +93,7 @@ namespace SzakdolgozatGRPCAdminKliens
                         UserInformation tmp = call.ResponseStream.Current;
                         if (tmp.UserId == 00)
                         {
+                            MessageBox.Show("Az adatbázist nem lehetett elérni.", "Error");
                             refreshButton.Visible = true;
                         }
                         else
@@ -105,6 +107,7 @@ namespace SzakdolgozatGRPCAdminKliens
                             submitButton.Visible = true;
                             refreshButton.Visible = false;
                             userIDComboBox.Visible = true;
+                            userLabel.Visible = true;
                         }
                     }
                 }

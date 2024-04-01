@@ -58,6 +58,7 @@ namespace SzakdolgozatGRPCKliens
             card?.Dispose();
             card = null;
             localCardID = "";
+            ClientDisplayLabel.Text = "Reader operational.";
         }
         private async void CardAdded(object sender, CardEventArgs args)
         {
@@ -137,6 +138,7 @@ namespace SzakdolgozatGRPCKliens
                         if (tmp.DoorID == 00)
                         {
                             refreshButton.Visible = true;
+                            ClientDisplayLabel.Text += "\n Database couldn't be reached.";
                         }
                         else
                         {
@@ -152,7 +154,7 @@ namespace SzakdolgozatGRPCKliens
             }
             catch (RpcException ex)
             {
-                ClientDisplayLabel.Text += "\n Database cannot be reached.";
+                ClientDisplayLabel.Text += "\n Server cannot be reached.";
                 File.AppendAllText(logFilePath, ex.Message + "Server couldn't be reached" + ",Time:" + DateTime.Now.ToString("yyyy'-'MM'-'dd HH':'mm':'ss") + "\n", Encoding.UTF8);
             }
         }
@@ -175,7 +177,7 @@ namespace SzakdolgozatGRPCKliens
             }
             catch (RpcException ex)
             {
-                ClientDisplayLabel.Text += "\n Database cannot be reached.";
+                ClientDisplayLabel.Text += "\n Server cannot be reached.";
                 File.AppendAllText(logFilePath, ex.Message + " Server couldn't be reached. " + ",Time:" + DateTime.Now.ToString("yyyy'-'MM'-'dd HH':'mm':'ss") + "\n", Encoding.UTF8);
             }
         }
@@ -188,7 +190,7 @@ namespace SzakdolgozatGRPCKliens
             }
             catch (RpcException ex)
             {
-                ClientDisplayLabel.Text += "\n Database cannot be reached.";
+                ClientDisplayLabel.Text += "\n Server cannot be reached.";
                 File.AppendAllText(logFilePath, ex.Message + " Server couldn't be reached. " + ",Time:" + DateTime.Now.ToString("yyyy'-'MM'-'dd HH':'mm':'ss") + "\n", Encoding.UTF8);
             }
         }
@@ -201,7 +203,7 @@ namespace SzakdolgozatGRPCKliens
             }
             catch (RpcException ex)
             {
-                ClientDisplayLabel.Text += "\n Database cannot be reached.";
+                ClientDisplayLabel.Text += "\n Server cannot be reached.";
                 File.AppendAllText(logFilePath, ex.Message + " Server couldn't be reached. " + ",Time:" + DateTime.Now.ToString("yyyy'-'MM'-'dd HH':'mm':'ss") + "\n", Encoding.UTF8);
             }
         }

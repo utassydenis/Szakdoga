@@ -36,15 +36,16 @@
             userEventsdataGridView = new DataGridView();
             submitButton = new Button();
             refreshButton = new Button();
+            userLabel = new Label();
             ((System.ComponentModel.ISupportInitialize)userEventsdataGridView).BeginInit();
             SuspendLayout();
             // 
             // userIDComboBox
             // 
             userIDComboBox.FormattingEnabled = true;
-            userIDComboBox.Location = new Point(28, 32);
+            userIDComboBox.Location = new Point(159, 34);
             userIDComboBox.Name = "userIDComboBox";
-            userIDComboBox.Size = new Size(331, 23);
+            userIDComboBox.Size = new Size(200, 23);
             userIDComboBox.TabIndex = 0;
             // 
             // startDateCheckBox
@@ -62,7 +63,7 @@
             // endDateCheckBox
             // 
             endDateCheckBox.AutoSize = true;
-            endDateCheckBox.Location = new Point(28, 145);
+            endDateCheckBox.Location = new Point(31, 144);
             endDateCheckBox.Name = "endDateCheckBox";
             endDateCheckBox.RightToLeft = RightToLeft.Yes;
             endDateCheckBox.Size = new Size(106, 19);
@@ -81,7 +82,7 @@
             // 
             // endDateTimePicker
             // 
-            endDateTimePicker.Location = new Point(148, 140);
+            endDateTimePicker.Location = new Point(159, 140);
             endDateTimePicker.Name = "endDateTimePicker";
             endDateTimePicker.Size = new Size(200, 23);
             endDateTimePicker.TabIndex = 4;
@@ -116,11 +117,21 @@
             refreshButton.UseVisualStyleBackColor = true;
             refreshButton.Click += refreshButton_Click;
             // 
+            // userLabel
+            // 
+            userLabel.AutoSize = true;
+            userLabel.Location = new Point(107, 37);
+            userLabel.Name = "userLabel";
+            userLabel.Size = new Size(30, 15);
+            userLabel.TabIndex = 8;
+            userLabel.Text = "User";
+            // 
             // GRPCAdminKliens
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(userLabel);
             Controls.Add(refreshButton);
             Controls.Add(submitButton);
             Controls.Add(userEventsdataGridView);
@@ -147,5 +158,6 @@
         private DataGridView userEventsdataGridView;
         private Button submitButton;
         private Button refreshButton;
+        private Label userLabel;
     }
 }
