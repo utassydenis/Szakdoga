@@ -145,8 +145,8 @@ namespace SzakdolgozatGRPCSzerver.Services
                     "WHERE card_user.user_id = '" + datedUserInformation.UserInfo.UserId + "'";
                 if (datedUserInformation.StartTime != "")
                 {
-                    query += " AND (door_logs.time_entered > '" + datedUserInformation.StartTime + "' "
-                        + "OR door_logs.time_exited > '" + datedUserInformation.StartTime + "')";
+                    query += " AND (door_logs.time_entered >= '" + datedUserInformation.StartTime + "' "
+                        + "OR door_logs.time_exited >= '" + datedUserInformation.StartTime + "')";
                 }
                 if (datedUserInformation.EndTime != "")
                 {
@@ -253,7 +253,6 @@ namespace SzakdolgozatGRPCSzerver.Services
 
             if (result >= 1)
             {
-                Console.WriteLine(result);
                 return true;
             }
             return false;

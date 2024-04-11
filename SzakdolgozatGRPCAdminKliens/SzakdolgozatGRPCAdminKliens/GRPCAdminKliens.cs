@@ -74,7 +74,7 @@ namespace SzakdolgozatGRPCAdminKliens
             tmpDatedUserInformation.EndTime = "";
             if (startDateTimePicker.Enabled)
             {
-                tmpDatedUserInformation.StartTime = startDateTimePicker.Text + " 23:59:59";
+                tmpDatedUserInformation.StartTime = startDateTimePicker.Text + " 00:00:00";
             }
             if (endDateTimePicker.Enabled)
             {
